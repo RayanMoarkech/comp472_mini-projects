@@ -3,6 +3,7 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
 
 
 # 1.2: Loads the data from a file
@@ -36,7 +37,7 @@ def graph_histogram(data_json, index):
 # 2.1: Process the dataset with CountVectorizer
 # Takes in the dataset
 # Prints the list of words with the occurrences
-def processTokens(data_json):
+def process_tokens(data_json):
     # Create a numpy array with the comments
     comments_array = [data_array[0] for data_array in data_json]
     comments_np = np.array(comments_array)
@@ -59,6 +60,14 @@ def processTokens(data_json):
     #     print(token, ': ', count_array[index])
 
 
+# 2.2: Split the dataset into 80% for training and 20% for testing
+# Takes in the dataset
+# Prints the list of words with the occurrences
+def split_dataset(data_json):
+    data_train, data_test = train_test_split(data_json, test_size=0.2, random_state=0)
+    return data_train, data_test
+
+
 # Main method of the code
 def main():
     # 1.2: Get the dataset
@@ -71,7 +80,10 @@ def main():
     graph_histogram(data_json, 2)
 
     # 2.1: Process the dataset
-    processTokens(data_json)
+    process_tokens(data_json)
+
+    # 2.2: Split the dataset for testing and training
+    data_train, data_test = split_dataset(data_json)
 
     return
 
