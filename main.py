@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 
 # File imports
 from mnb_classifier import *
+from compute_performance import *
 
 
 # 1.2: Loads the data from a file
@@ -87,6 +88,10 @@ def main():
 
     # 2.2: Split the dataset for testing and training
     data_train, data_test = split_dataset(data_json=data_json)
+
+    # Flush the performance.txt file to generate a new one
+    # uncomment to regenerate!
+    # flush_performance_file()
 
     # 2.3.1: Base-MNB
     base_mnb(data_train=data_train, data_test=data_test)
