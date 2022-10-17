@@ -1,7 +1,7 @@
-import numpy as np
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import GridSearchCV
-from sklearn.feature_extraction.text import CountVectorizer
+
+from compute_performance import *
 
 
 # 2.3.1: Base-MNB
@@ -14,36 +14,41 @@ def base_mnb(data_train, data_test):
     # Test on emotions
     print()
     print('Emotions:')
-    base_mnb_model(data_train=data_train, data_test=data_test, index=1)
+    cv_train_fit, target_true_train, cv_test_transform, target_true_test = \
+        get_true_cv_target_data(data_train=data_train, data_test=data_test, index=1)
+    base_mnb_model(
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test
+    )
 
     # Test on sentiments
     print()
     print('Sentiments:')
-    base_mnb_model(data_train=data_train, data_test=data_test, index=2)
+    cv_train_fit, target_true_train, cv_test_transform, target_true_test = \
+        get_true_cv_target_data(data_train=data_train, data_test=data_test, index=2)
+    base_mnb_model(
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test
+    )
 
 
 # Base-MNB model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def base_mnb_model(data_train, data_test, index):
-    # Create a numpy array with the comments
-    comments_array = [data_array[0] for data_array in data_train]
-    comments_np = np.array(comments_array)
-
-    # Create training data
-    cv = CountVectorizer()
-    cv_fit = cv.fit_transform(comments_np)
-    target_vector = [data_array[index] for data_array in data_train]
+def base_mnb_model(cv_train_fit, target_true_train, cv_test_transform, target_true_test):
+    # Define the model classifier
+    classifier = MultinomialNB()
 
     # Train the model
-    classifier = MultinomialNB()
-    model = classifier.fit(X=cv_fit, y=target_vector)
+    model = classifier.fit(X=cv_train_fit, y=target_true_train)
     print("Class priors log = ", model.class_log_prior_)
 
     # Predict
-    test = cv.transform(np.array([data_test[1][0]]))
-    predict = model.predict(test)
-    print('Predicted class =', predict, '; Target class =', data_test[1][index])
+    target_predict = model.predict(cv_test_transform)
 
 
 # 2.3.4: Top-MNB
@@ -56,40 +61,46 @@ def top_mnb(data_train, data_test):
     # Test on emotions
     print()
     print('Emotions:')
-    top_mnb_model(data_train=data_train, data_test=data_test, index=1)
+    cv_train_fit, target_true_train, cv_test_transform, target_true_test = \
+        get_true_cv_target_data(data_train=data_train, data_test=data_test, index=1)
+    top_mnb_model(
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test
+    )
 
     # Test on sentiments
     print()
     print('Sentiments:')
-    top_mnb_model(data_train=data_train, data_test=data_test, index=2)
+    cv_train_fit, target_true_train, cv_test_transform, target_true_test = \
+        get_true_cv_target_data(data_train=data_train, data_test=data_test, index=2)
+    top_mnb_model(
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test
+    )
 
 
 # Top-MNB model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def top_mnb_model(data_train, data_test, index):
-    # Create a numpy array with the comments
-    comments_array = [data_array[0] for data_array in data_train]
-    comments_np = np.array(comments_array)
-
-    # Create training data
-    cv = CountVectorizer()
-    cv_fit = cv.fit_transform(comments_np)
-    target_vector = [data_array[index] for data_array in data_train]
-
+def top_mnb_model(cv_train_fit, target_true_train, cv_test_transform, target_true_test):
     # Define the model classifier
     parameters = {
-        'alpha': [0.5, 0, 2]
+        'alpha': (0.5, 0, 2)
     }
     classifier = MultinomialNB()
     grid_search = GridSearchCV(classifier, parameters)
 
     # Train the model
-    model = grid_search.fit(X=cv_fit, y=target_vector)
+    model = grid_search.fit(X=cv_train_fit, y=target_true_train)
     # print("Class priors log = ", model.class_log_prior_)
 
     # Predict
-    test = cv.transform(np.array([data_test[1][0]]))
-    predict = model.predict(test)
-    print('Predicted class =', predict, '; Target class =', data_test[1][index])
+    target_predict = model.predict(cv_test_transform)
+
+    # Get the test target true values
+
 
