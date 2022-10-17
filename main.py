@@ -91,6 +91,9 @@ def main():
     # 2.3.1: Base-MNB
     base_mnb(data_train=data_train, data_test=data_test)
 
+    # 2.3.4: Top-MNB
+    top_mnb(data_train=data_train, data_test=data_test)
+
     return
 
 
