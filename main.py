@@ -6,8 +6,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
 # File imports
-from mnb_classifier import *
-from compute_performance import *
+from mnb_classifier import base_mnb, top_mnb
+from compute_performance import flush_performance_file
 
 
 # 1.2: Loads the data from a file

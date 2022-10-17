@@ -1,9 +1,10 @@
+# Library imports
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix
 
 
+# Global variables
 file_name = 'performance.txt'
 
 

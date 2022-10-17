@@ -3,7 +3,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import GridSearchCV
 
 # File imports
-from compute_performance import *
+from compute_performance import get_true_cv_target_data, write_to_performance_file
 
 
 # 2.3.1: Base-MNB
