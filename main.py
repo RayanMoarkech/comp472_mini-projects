@@ -1,9 +1,13 @@
-# This is a sample Python script.
+# Library imports
 import json
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
+
+# File imports
+from mnb_classifier import base_mnb, top_mnb
+from compute_performance import flush_performance_file
 
 
 # 1.2: Loads the data from a file
@@ -74,16 +78,26 @@ def main():
     data_json = load_data(file_name='goemotions.json')
 
     # 1.3: Graph emotions histogram
-    graph_histogram(data_json, 1)
+    graph_histogram(data_json=data_json, index=1)
 
     # 1.3: Graph emotions histogram
-    graph_histogram(data_json, 2)
+    graph_histogram(data_json=data_json, index=2)
 
     # 2.1: Process the dataset
-    process_tokens(data_json)
+    process_tokens(data_json=data_json)
 
     # 2.2: Split the dataset for testing and training
-    data_train, data_test = split_dataset(data_json)
+    data_train, data_test = split_dataset(data_json=data_json)
+
+    # Flush the performance.txt file to generate a new one
+    # uncomment to regenerate!
+    # flush_performance_file()
+
+    # 2.3.1: Base-MNB
+    base_mnb(data_train=data_train, data_test=data_test)
+
+    # 2.3.4: Top-MNB
+    top_mnb(data_train=data_train, data_test=data_test)
 
     return
 
