@@ -44,7 +44,9 @@ def base_mlp(data_train, data_test):
 def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
     # Define the model classifier
     # Using default parameters for MLPClassifier
-    classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
+    # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
+    classifier = MLPClassifier(verbose=True, early_stopping=True)
+
 
     # Train the model
     model = classifier.fit(X=cv_train_fit, y=target_true_train)
@@ -104,7 +106,9 @@ def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
         'hidden_layer_sizes': [(200, 150, 100), (100, 75)],
         'max_iter': [200],
         'activation': ['logistic', 'tanh', 'relu', 'identity'],
-        'solver': ['adam', 'sgd']
+        'solver': ['adam', 'sgd'],
+        'verbose': [True],
+        'early_stopping': [True]
     }
     
     classifier = MLPClassifier()
