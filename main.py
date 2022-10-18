@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 
 # File imports
 from mnb_classifier import base_mnb, top_mnb
+from mlp_classifier import base_mlp, top_mlp
 from compute_performance import flush_performance_file
 
 
@@ -94,11 +95,16 @@ def main():
     # flush_performance_file()
 
     # 2.3.1: Base-MNB
-    base_mnb(data_train=data_train, data_test=data_test)
+    #base_mnb(data_train=data_train, data_test=data_test)
+
+    #2.3.3: Base-MLP
+    base_mlp(data_train=data_train, data_test=data_test)
 
     # 2.3.4: Top-MNB
-    top_mnb(data_train=data_train, data_test=data_test)
+    #top_mnb(data_train=data_train, data_test=data_test)
 
+    # 2.3.6 Top-MLP
+    top_mlp(data_train=data_train, data_test=data_test)
     return
 
 
