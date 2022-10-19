@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
+from gensim.downloader import load
 
 # File imports
 from mnb_classifier import base_mnb, top_mnb
@@ -72,6 +73,13 @@ def split_dataset(data_json):
     return data_train, data_test
 
 
+# 3.1: Load the data
+# To load the word2vec-google-news-300 pretrained embedding model
+def load_word2vector_data():
+    corpus = load('word2vec-google-news-300')
+    print(corpus)
+
+
 # Main method of the code
 def main():
     # 1.2: Get the dataset
@@ -98,6 +106,9 @@ def main():
 
     # 2.3.4: Top-MNB
     top_mnb(data_train=data_train, data_test=data_test)
+
+    # 3.1: Load
+    load_word2vector_data()
 
     return
 
