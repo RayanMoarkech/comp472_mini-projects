@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
-from gensim.downloader import load
+# from gensim.downloader import load
+import gensim.downloader as api
 from nltk.tokenize import word_tokenize
 
 # File imports
@@ -79,17 +80,12 @@ def split_dataset(data_json):
 # 3.1: Load the data
 # To load the word2vec-google-news-300 pretrained embedding model
 def load_word2vector_data():
-    corpus = load('word2vec-google-news-300')
+    corpus = api.load('word2vec-google-news-300')
     return corpus
 
 
 # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
-def tokenize_reddit_posts():
-    data_json = load_data(file_name='goemotions.json')
-
-    # Split data into training and testing
-    data_train, data_test = split_dataset(data_json)
-
+def tokenize_reddit_posts(data_train, data_test):
     # train_values is a list of all Reddit post content from training set
     train_values = [data_array[0] for data_array in data_train]
 
@@ -110,49 +106,55 @@ def tokenize_reddit_posts():
 
 # 3.3 Computing embedding of Reddit posts
 def average_embeddings(tokens, corpus):
-
-    # Get word2vec vocabulary
-    vocabulary = list(corpus.index_to_key)
-
-    avg_post_embeddings = []
+    average_embeddings = []
     for post in tokens:
-
-        # Remove words that have no embedding in word2vec vocabulary
-        filtered_posts = [word for word in post if word in vocabulary]
-
-        # Take average embedding of reddit post and append to list
-        # filtered post must have length >0 to use np.mean
-        if len(filtered_posts) > 0:
-            avg = np.mean(corpus[filtered_posts])
-            avg_post_embeddings.append(avg)
-
-    print()
-    print("Average embeddings of Reddit posts: ")
-    print(avg_post_embeddings)
-
+        post_embedding = []
+        for word in post:
+            try:
+                word_embedding = corpus[word]
+                post_embedding.append(word_embedding)
+            except (KeyError):
+                pass
+        if len(post_embedding) > 0:
+            post_embedding_avg = np.average(post_embedding, axis=0)
+            average_embeddings.append(post_embedding_avg)
     return average_embeddings
+
+
+def flatten(tokens):
+    flat_list = sum(tokens, [])
+    print(flat_list)
 
 
 # 3.4 Computing hit rates of training and test sets
 def embedding_hit_rate(corpus, train_tokens, test_tokens):
     # flatten tokens to only have words, instead of list of words
-    train_words = [words for sentence in train_tokens for words in sentence]
-    test_words = [words for sentence in test_tokens for words in sentence]
+    train_words = [words for post in train_tokens for words in post]
+    test_words = [words for post in test_tokens for words in post]
 
-    # Get word2vec vocabulary
-    vocabulary = list(corpus.index_to_key)
+    train_hit = 0
+    for word in train_words:
+        try:
+            corpus[word]
+            train_hit += 1
+        except (KeyError):
+            pass
 
-    hit__words_train = [word for word in train_words if word in vocabulary]
-    hit_rate_train = (len(hit__words_train) / len(train_words)) * 100
-    hit__words_test = [word for word in test_words if word in vocabulary]
-    hit_rate_test = (len(hit__words_test) / len(test_words)) * 100
+    train_hit_rate = (train_hit / len(train_words)) * 100
+    print(train_hit_rate, "%")
 
-    print()
-    print("Train hit rate: ")
-    print(hit_rate_train, "%")
-    print()
-    print("Test hit rate: ")
-    print(hit_rate_train, "%")
+    test_hit = 0
+    for word in test_words:
+        try:
+            corpus[word]
+            test_hit += 1
+        except (KeyError):
+            pass
+
+    test_hit_rate = (train_hit / len(train_words)) * 100
+    print(test_hit_rate, "%")
+
+    return train_hit_rate, train_hit_rate
 
 
 # Main method of the code
@@ -193,7 +195,7 @@ def main():
 
     # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
     # nltk.download('all')
-    train_tokens, test_tokens = tokenize_reddit_posts()
+    train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
 
     # 3.3 Computing embedding of Reddit posts
     average_embeddings(train_tokens, corpus)
