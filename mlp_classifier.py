@@ -200,6 +200,7 @@ hidden_layer_sizes, activation, solver, corpus_name='Word2Vec'):
         'hidden_layer_sizes': hidden_layer_sizes,
         'activation': activation,
         'solver': solver,
+        'max_iter': [15],
         'verbose': [True],
         'early_stopping': [True]
     }
