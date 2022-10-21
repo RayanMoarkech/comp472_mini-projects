@@ -3,11 +3,9 @@ import json
 import nltk
 import matplotlib.pyplot as plt
 import numpy as np
-from pyparsing import WordEnd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from gensim.downloader import load
-from gensim.models import Word2Vec
 from nltk.tokenize import word_tokenize
 
 # File imports
@@ -82,14 +80,14 @@ def split_dataset(data_json):
 # To load the word2vec-google-news-300 pretrained embedding model
 def load_word2vector_data():
     corpus = load('word2vec-google-news-300')
-    print(corpus)
     return corpus
 
-#3.2 Extract words from the Reddit posts using tokenizer from nlkt
+
+# 3.2 Extract words from the Reddit posts using tokenizer from nlkt
 def tokenize_reddit_posts():
     data_json = load_data(file_name='goemotions.json')
 
-    # split data into training and testing
+    # Split data into training and testing
     data_train, data_test = split_dataset(data_json)
 
     # train_values is a list of all Reddit post content from training set
@@ -98,16 +96,17 @@ def tokenize_reddit_posts():
     # test_values is a list of all Reddit post content from training set
     test_values = [data_array[0] for data_array in data_test]
 
-    #using nltk tokenizer to tokenize words in post
+    # Using nltk tokenizer to tokenize words in post
     train_tokens = [word_tokenize(i) for i in train_values]
     test_tokens = [word_tokenize(i) for i in test_values]
 
-    #flatten tokens to only have words, instead of list of words
+    # Flatten tokens to only have words, instead of list of words
     print()
     print("Number of tokens in the training set: ")
     print(len([words for sentence in train_tokens for words in sentence]))
 
     return train_tokens, test_tokens
+
 
 # 3.3 Computing embedding of Reddit posts
 def average_embeddings(tokens, corpus):
@@ -133,9 +132,10 @@ def average_embeddings(tokens, corpus):
 
     return average_embeddings
 
+
 # 3.4 Computing hit rates of training and test sets
 def embedding_hit_rate(corpus, train_tokens, test_tokens):
-    #flatten tokens to only have words, instead of list of words
+    # flatten tokens to only have words, instead of list of words
     train_words = [words for sentence in train_tokens for words in sentence]
     test_words = [words for sentence in test_tokens for words in sentence]
 
@@ -143,9 +143,9 @@ def embedding_hit_rate(corpus, train_tokens, test_tokens):
     vocabulary = list(corpus.index_to_key)
 
     hit__words_train = [word for word in train_words if word in vocabulary]
-    hit_rate_train = (len(hit__words_train)/len(train_words))*100
+    hit_rate_train = (len(hit__words_train) / len(train_words)) * 100
     hit__words_test = [word for word in test_words if word in vocabulary]
-    hit_rate_test = (len(hit__words_test)/len(test_words))*100
+    hit_rate_test = (len(hit__words_test) / len(test_words)) * 100
 
     print()
     print("Train hit rate: ")
@@ -153,7 +153,6 @@ def embedding_hit_rate(corpus, train_tokens, test_tokens):
     print()
     print("Test hit rate: ")
     print(hit_rate_train, "%")
-
 
 
 # Main method of the code
@@ -193,6 +192,7 @@ def main():
     corpus = load_word2vector_data()
 
     # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
+    # nltk.download('all')
     train_tokens, test_tokens = tokenize_reddit_posts()
 
     # 3.3 Computing embedding of Reddit posts
