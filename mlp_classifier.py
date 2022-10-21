@@ -4,6 +4,7 @@ from sklearn.model_selection import GridSearchCV
 
 # File imports
 from compute_performance import get_true_cv_target_data, write_to_performance_file
+from embeddings import load_word2vector_data, tokenize_reddit_posts, average_embeddings
 
 # 2.3.3: Base-MLP
 def base_mlp(data_train, data_test):
@@ -30,6 +31,49 @@ def base_mlp(data_train, data_test):
     print('Sentiments:')
     target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test = \
         get_true_cv_target_data(data_train=data_train, data_test=data_test, index=2)
+    base_mlp_model(
+        target_name=target_name,
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test
+    )
+
+# 3.5: Base-MLP for embeddings
+def base_mlp_embeddings(data_train, data_test):
+    print()
+    print('-------------------------------------------------')
+    print('Base MLP')
+    print('-------------------------------------------------')
+
+    # Test on emotions
+    print()
+    print('Emotions:')
+    target_name = "emotions"
+
+    corpus = load_word2vector_data()
+    train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
+    cv_train_fit, cv_test_transform = average_embeddings(train_tokens, test_tokens, corpus)
+    target_true_train = [data_array[1] for data_array in data_train]
+    target_true_test = [data_array[1] for data_array in data_test]
+
+    base_mlp_model(
+        target_name=target_name,
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test
+    )
+
+
+    # Test on sentiments
+    print()
+    print('Sentiments:')
+
+    target_name = "sentiments"
+    target_true_train = [data_array[2] for data_array in data_train]
+    target_true_test = [data_array[2] for data_array in data_test]
+
     base_mlp_model(
         target_name=target_name,
         cv_train_fit=cv_train_fit,
@@ -103,8 +147,8 @@ def top_mlp(data_train, data_test):
 def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
     # Define the model classifier
     parameters = {
-        'hidden_layer_sizes': [(200, 150, 100), (100, 75)],
-        'max_iter': [200],
+        'hidden_layer_sizes': [(5, 5, 5), (10, 10)],
+        'max_iter': [15],
         'activation': ['logistic', 'tanh', 'relu', 'identity'],
         'solver': ['adam', 'sgd'],
         'verbose': [True],
@@ -119,6 +163,7 @@ def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
 
     # Predict
     target_predict = model.predict(cv_test_transform)
+    print("Best parameters: ", grid_search.best_params_)
 
     # Write to file
     # model_description = 'The Top-MLP model ' + target_name + \

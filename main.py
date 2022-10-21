@@ -8,11 +8,12 @@ from sklearn.model_selection import train_test_split
 # from gensim.downloader import load
 import gensim.downloader as api
 from nltk.tokenize import word_tokenize
+import time
 
 # File imports
 from mnb_classifier import base_mnb, top_mnb
 from dt_classifier import base_dt, top_dt
-from mlp_classifier import base_mlp, top_mlp
+from mlp_classifier import base_mlp, base_mlp_embeddings, top_mlp
 from compute_performance import flush_performance_file
 
 
@@ -106,9 +107,9 @@ def tokenize_reddit_posts(data_train, data_test):
 
 
 # 3.3 Computing embedding of Reddit posts
-def average_embeddings(tokens, corpus):
-    average_embeddings = []
-    for post in tokens:
+def average_embeddings(train_tokens, test_tokens, corpus):
+    train_average_embeddings = []
+    for post in train_tokens:
         post_embedding = []
         for word in post:
             try:
@@ -118,8 +119,22 @@ def average_embeddings(tokens, corpus):
                 pass
         if len(post_embedding) > 0:
             post_embedding_avg = np.average(post_embedding, axis=0)
-            average_embeddings.append(post_embedding_avg)
-    return average_embeddings
+            train_average_embeddings.append(post_embedding_avg)
+    
+    test_average_embeddings = []
+    for post in test_tokens:
+        post_embedding = []
+        for word in post:
+            try:
+                word_embedding = corpus[word]
+                post_embedding.append(word_embedding)
+            except (KeyError):
+                pass
+        if len(post_embedding) > 0:
+            post_embedding_avg = np.average(post_embedding, axis=0)
+            test_average_embeddings.append(post_embedding_avg)
+
+    return train_average_embeddings, test_average_embeddings
 
 # 3.4 Computing hit rates of training and test sets
 def embedding_hit_rate(corpus, train_tokens, test_tokens):
@@ -177,32 +192,38 @@ def main():
     #base_mnb(data_train=data_train, data_test=data_test)
 
     #2.3.3: Base-MLP
-    base_mlp(data_train=data_train, data_test=data_test)
+    #base_mlp(data_train=data_train, data_test=data_test)
 
     # 2.3.2: Base-DT
-    base_dt(data_train=data_train, data_test=data_test)
+    #base_dt(data_train=data_train, data_test=data_test)
 
     # 2.3.4: Top-MNB
     #top_mnb(data_train=data_train, data_test=data_test)
 
     # 2.3.5: Top-DT
-    top_dt(data_train=data_train, data_test=data_test)
+    #top_dt(data_train=data_train, data_test=data_test)
     
     # 2.3.6 Top-MLP
-    top_mlp(data_train=data_train, data_test=data_test)
+    # start = time.time()
+    # top_mlp(data_train=data_train, data_test=data_test)
+    # end = time.time()
+    # print(end - start)
 
     # 3.1: Load
-    corpus = load_word2vector_data()
+    #corpus = load_word2vector_data()
 
     # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
     # nltk.download('all')
-    train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
+    #train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
 
     # 3.3 Computing embedding of Reddit posts
-    average_embeddings(train_tokens, corpus)
+    #train_average_embeddings, test_average_embeddings = average_embeddings(train_tokens, test_tokens, corpus)
 
     # 3.4 Computing hit rates of training and test sets
-    embedding_hit_rate(corpus, train_tokens, test_tokens)
+    #embedding_hit_rate(corpus, train_tokens, test_tokens)
+
+    # 3.5 Train Base-MLP
+    base_mlp_embeddings(data_train, data_test)
 
 
 # Press the green button in the gutter to run the script.
