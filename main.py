@@ -121,12 +121,6 @@ def average_embeddings(tokens, corpus):
             average_embeddings.append(post_embedding_avg)
     return average_embeddings
 
-
-def flatten(tokens):
-    flat_list = sum(tokens, [])
-    print(flat_list)
-
-
 # 3.4 Computing hit rates of training and test sets
 def embedding_hit_rate(corpus, train_tokens, test_tokens):
     # flatten tokens to only have words, instead of list of words
