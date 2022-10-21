@@ -12,6 +12,7 @@ from nltk.tokenize import word_tokenize
 
 # File imports
 from mnb_classifier import base_mnb, top_mnb
+from dt_classifier import base_dt, top_dt
 from compute_performance import flush_performance_file
 
 
@@ -125,7 +126,7 @@ def average_embeddings(tokens, corpus):
         if len(filtered_posts) > 0:
             avg = np.mean(corpus[filtered_posts])
             avg_post_embeddings.append(avg)
-    
+
     print()
     print("Average embeddings of Reddit posts: ")
     print(avg_post_embeddings)
@@ -179,8 +180,14 @@ def main():
     # 2.3.1: Base-MNB
     base_mnb(data_train=data_train, data_test=data_test)
 
+    # 2.3.2: Base-DT
+    base_dt(data_train=data_train, data_test=data_test)
+
     # 2.3.4: Top-MNB
     top_mnb(data_train=data_train, data_test=data_test)
+
+    # 2.3.5: Top-DT
+    top_dt(data_train=data_train, data_test=data_test)
 
     # 3.1: Load
     corpus = load_word2vector_data()
@@ -194,6 +201,7 @@ def main():
     # 3.4 Computing hit rates of training and test sets
     embedding_hit_rate(corpus, train_tokens, test_tokens)
 
+    return
 
 
 # Press the green button in the gutter to run the script.
