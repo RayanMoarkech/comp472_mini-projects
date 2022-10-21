@@ -101,22 +101,22 @@ def main():
     # flush_performance_file()
 
     # 2.3.1: Base-MNB
-    #base_mnb(data_train=data_train, data_test=data_test)
+    base_mnb(data_train=data_train, data_test=data_test)
 
     # 2.3.2: Base-DT
-    #base_dt(data_train=data_train, data_test=data_test)
+    base_dt(data_train=data_train, data_test=data_test)
 
     # 2.3.3: Base-MLP
-    #base_mlp(data_train=data_train, data_test=data_test)
+    base_mlp(data_train=data_train, data_test=data_test)
 
     # 2.3.4: Top-MNB
-    #top_mnb(data_train=data_train, data_test=data_test)
+    top_mnb(data_train=data_train, data_test=data_test)
 
     # 2.3.5: Top-DT
-    #top_dt(data_train=data_train, data_test=data_test)
+    top_dt(data_train=data_train, data_test=data_test)
     
     # 2.3.6 Top-MLP
-    #top_mlp(data_train=data_train, data_test=data_test)
+    top_mlp(data_train=data_train, data_test=data_test)
 
     # 3.1: Load
     corpus = load_word2vector_data()
@@ -135,16 +135,16 @@ def main():
     base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
 
     # 3.6: Top-MLP for embeddings
-    #top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
+    top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
 
     #3.8 Different pre-trained Engish models
     fasttext_corpus = load_fasttext_data()
     base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, fasttext_corpus, "FastText")
-    # top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, fasttext_corpus, "FastText")
+    top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, fasttext_corpus, "FastText")
 
-    # glove_corpus = load_glove_data()
-    # base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, glove_corpus, "Glove")
-    # top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, glove_corpus, "Glove")
+    glove_corpus = load_glove_data()
+    base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, glove_corpus, "Glove")
+    top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, glove_corpus, "Glove")
 
 
 # Press the green button in the gutter to run the script.
