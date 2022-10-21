@@ -1,12 +1,17 @@
 # Library imports
 import json
+import nltk
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
+# from gensim.downloader import load
+import gensim.downloader as api
+from nltk.tokenize import word_tokenize
 
 # File imports
 from mnb_classifier import base_mnb, top_mnb
+from dt_classifier import base_dt, top_dt
 from mlp_classifier import base_mlp, top_mlp
 from compute_performance import flush_performance_file
 
@@ -73,6 +78,86 @@ def split_dataset(data_json):
     return data_train, data_test
 
 
+# 3.1: Load the data
+# To load the word2vec-google-news-300 pretrained embedding model
+def load_word2vector_data():
+    corpus = api.load('word2vec-google-news-300')
+    return corpus
+
+
+# 3.2 Extract words from the Reddit posts using tokenizer from nlkt
+def tokenize_reddit_posts(data_train, data_test):
+    # train_values is a list of all Reddit post content from training set
+    train_values = [data_array[0] for data_array in data_train]
+
+    # test_values is a list of all Reddit post content from training set
+    test_values = [data_array[0] for data_array in data_test]
+
+    # Using nltk tokenizer to tokenize words in post
+    train_tokens = [word_tokenize(i) for i in train_values]
+    test_tokens = [word_tokenize(i) for i in test_values]
+
+    # Flatten tokens to only have words, instead of list of words
+    print()
+    print("Number of tokens in the training set: ")
+    print(len([words for sentence in train_tokens for words in sentence]))
+
+    return train_tokens, test_tokens
+
+
+# 3.3 Computing embedding of Reddit posts
+def average_embeddings(tokens, corpus):
+    average_embeddings = []
+    for post in tokens:
+        post_embedding = []
+        for word in post:
+            try:
+                word_embedding = corpus[word]
+                post_embedding.append(word_embedding)
+            except (KeyError):
+                pass
+        if len(post_embedding) > 0:
+            post_embedding_avg = np.average(post_embedding, axis=0)
+            average_embeddings.append(post_embedding_avg)
+    return average_embeddings
+
+
+def flatten(tokens):
+    flat_list = sum(tokens, [])
+    print(flat_list)
+
+
+# 3.4 Computing hit rates of training and test sets
+def embedding_hit_rate(corpus, train_tokens, test_tokens):
+    # flatten tokens to only have words, instead of list of words
+    train_words = [words for post in train_tokens for words in post]
+    test_words = [words for post in test_tokens for words in post]
+
+    train_hit = 0
+    for word in train_words:
+        try:
+            corpus[word]
+            train_hit += 1
+        except (KeyError):
+            pass
+
+    train_hit_rate = (train_hit / len(train_words)) * 100
+    print(train_hit_rate, "%")
+
+    test_hit = 0
+    for word in test_words:
+        try:
+            corpus[word]
+            test_hit += 1
+        except (KeyError):
+            pass
+
+    test_hit_rate = (train_hit / len(train_words)) * 100
+    print(test_hit_rate, "%")
+
+    return train_hit_rate, train_hit_rate
+
+
 # Main method of the code
 def main():
     # 1.2: Get the dataset
@@ -100,12 +185,30 @@ def main():
     #2.3.3: Base-MLP
     base_mlp(data_train=data_train, data_test=data_test)
 
+    # 2.3.2: Base-DT
+    base_dt(data_train=data_train, data_test=data_test)
+
     # 2.3.4: Top-MNB
     #top_mnb(data_train=data_train, data_test=data_test)
 
+    # 2.3.5: Top-DT
+    top_dt(data_train=data_train, data_test=data_test)
+    
     # 2.3.6 Top-MLP
     top_mlp(data_train=data_train, data_test=data_test)
-    return
+
+    # 3.1: Load
+    corpus = load_word2vector_data()
+
+    # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
+    # nltk.download('all')
+    train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
+
+    # 3.3 Computing embedding of Reddit posts
+    average_embeddings(train_tokens, corpus)
+
+    # 3.4 Computing hit rates of training and test sets
+    embedding_hit_rate(corpus, train_tokens, test_tokens)
 
 
 # Press the green button in the gutter to run the script.
