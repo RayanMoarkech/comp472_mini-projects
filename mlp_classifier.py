@@ -23,7 +23,7 @@ def base_mlp(data_train, data_test):
         cv_train_fit=cv_train_fit,
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
-        target_true_test=target_true_test
+        target_true_test=target_true_test,
     )
 
     # Test on sentiments
@@ -87,7 +87,7 @@ def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus
 # Base-MLP model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, corpus_name, embedding=False):
+def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, corpus_name="Word2Vec", embedding=False):
     # Define the model classifier
     # Using default parameters for MLPClassifier
     # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
