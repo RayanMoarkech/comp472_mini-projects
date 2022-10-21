@@ -4,7 +4,7 @@ from sklearn.model_selection import GridSearchCV
 
 # File imports
 from compute_performance import get_true_cv_target_data, write_to_performance_file
-from embeddings import load_word2vector_data, tokenize_reddit_posts, average_embeddings
+from embeddings import average_embeddings
 
 # 2.3.3: Base-MLP
 def base_mlp(data_train, data_test):
@@ -40,7 +40,7 @@ def base_mlp(data_train, data_test):
     )
 
 # 3.5: Base-MLP for embeddings
-def base_mlp_embeddings(data_train, data_test):
+def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus):
     print()
     print('-------------------------------------------------')
     print('Base MLP')
@@ -51,8 +51,6 @@ def base_mlp_embeddings(data_train, data_test):
     print('Emotions:')
     target_name = "emotions"
 
-    corpus = load_word2vector_data()
-    train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
     cv_train_fit, cv_test_transform = average_embeddings(train_tokens, test_tokens, corpus)
     target_true_train = [data_array[1] for data_array in data_train]
     target_true_test = [data_array[1] for data_array in data_test]
