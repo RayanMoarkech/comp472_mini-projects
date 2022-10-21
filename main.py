@@ -126,10 +126,10 @@ def main():
     train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
 
     # 3.3 Computing embedding of Reddit posts
-    train_average_embeddings, test_average_embeddings = average_embeddings(train_tokens, test_tokens, corpus)
+    #train_average_embeddings, test_average_embeddings = average_embeddings(train_tokens, test_tokens, corpus)
 
     # 3.4 Computing hit rates of training and test sets
-    #embedding_hit_rate(corpus, train_tokens, test_tokens)
+    embedding_hit_rate(corpus, train_tokens, test_tokens)
 
     # 3.5 Train Base-MLP
     base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
