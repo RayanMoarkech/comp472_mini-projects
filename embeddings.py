@@ -1,4 +1,6 @@
 import gensim.downloader as api
+from gensim.models.fasttext import FastText
+
 from nltk.tokenize import word_tokenize
 import numpy as np
 
@@ -8,6 +10,14 @@ def load_word2vector_data():
     corpus = api.load('word2vec-google-news-300')
     return corpus
 
+# 3.8 Load Fasttext
+def load_fasttext_data():
+    corpus = api.load('fasttext-wiki-news-subwords-300')
+    return corpus
+
+def load_glove_data():
+    corpus = api.load('glove-wiki-gigaword-300')
+    return corpus
 
 # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
 def tokenize_reddit_posts(data_train, data_test):

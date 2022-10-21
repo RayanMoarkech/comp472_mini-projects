@@ -40,7 +40,7 @@ def base_mlp(data_train, data_test):
     )
 
 # 3.5: Base-MLP for embeddings
-def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus):
+def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus, corpus_name):
     print()
     print('-------------------------------------------------')
     print('Base MLP')
@@ -60,7 +60,8 @@ def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus
         cv_train_fit=cv_train_fit,
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
-        target_true_test=target_true_test
+        target_true_test=target_true_test,
+        corpus_name=corpus_name
     )
 
 
@@ -77,13 +78,14 @@ def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus
         cv_train_fit=cv_train_fit,
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
-        target_true_test=target_true_test
+        target_true_test=target_true_test,
+        corpus_name=corpus_name
     )
 
 # Base-MLP model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
+def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, corpus_name='Word2Vec'):
     # Define the model classifier
     # Using default parameters for MLPClassifier
     # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
@@ -98,7 +100,7 @@ def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfo
     target_predict = model.predict(cv_test_transform)
 
     # Write to file
-    model_description = 'The Base-MLP model ' + target_name + ' with default hyper-parameter values'
+    model_description = 'The Base-MLP model using ' + corpus_name + ' for ' + target_name + ' with default hyper-parameter values'
     write_to_performance_file(
         model_description=model_description,
         target_true_test=target_true_test,
@@ -142,7 +144,7 @@ def top_mlp(data_train, data_test):
     )
 
 # 3.6: Top-MLP for embeddings
-def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus):
+def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus, corpus_name):
     print()
     print('-------------------------------------------------')
     print('Top MLP')
@@ -165,7 +167,8 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
         target_true_test=target_true_test,
         hidden_layer_sizes=[(10, 5)],
         activation=['relu'],
-        solver=['adam']
+        solver=['adam'],
+        corpus_name=corpus_name
     )
 
     # Test on sentiments
@@ -182,7 +185,8 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
         cv_train_fit=cv_train_fit,
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
-        target_true_test=target_true_test
+        target_true_test=target_true_test,
+        corpus_name=corpus_name
     )
 
 
@@ -190,7 +194,7 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
 # the emotions with index 1
 # or the sentiments with index 2
 def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, 
-hidden_layer_sizes, activation, solver):
+hidden_layer_sizes, activation, solver, corpus_name='Word2Vec'):
     # Define the model classifier
     parameters = {
         'hidden_layer_sizes': hidden_layer_sizes,
@@ -211,7 +215,7 @@ hidden_layer_sizes, activation, solver):
     print("Best parameters: ", grid_search.best_params_)
 
     # Write to file
-    model_description = 'The Top-MLP model ' + target_name + \
+    model_description = 'The Top-MLP model using ' + corpus_name + ' for ' + target_name + \
                         ' with GridSearchCV and hyper-parameter hidden_layer_sizes of lists: ' + \
                         str(hidden_layer_sizes) + ', activation of list: ' + str(activation) + 'solver of list: ' +  str(solver)
     write_to_performance_file(

@@ -14,7 +14,7 @@ import time
 from mnb_classifier import base_mnb, top_mnb
 from dt_classifier import base_dt, top_dt
 from mlp_classifier import base_mlp, base_mlp_embeddings, top_mlp, top_mlp_embeddings
-from embeddings import load_word2vector_data, tokenize_reddit_posts, embedding_hit_rate
+from embeddings import load_word2vector_data, tokenize_reddit_posts, embedding_hit_rate, load_fasttext_data, load_glove_data
 from compute_performance import flush_performance_file
 
 
@@ -126,16 +126,25 @@ def main():
     train_tokens, test_tokens = tokenize_reddit_posts(data_train, data_test)
 
     # 3.3 Computing embedding of Reddit posts
-    #train_average_embeddings, test_average_embeddings = average_embeddings(train_tokens, test_tokens, corpus)
+    train_average_embeddings, test_average_embeddings = average_embeddings(train_tokens, test_tokens, corpus)
 
     # 3.4 Computing hit rates of training and test sets
-    embedding_hit_rate(corpus, train_tokens, test_tokens)
+    #embedding_hit_rate(corpus, train_tokens, test_tokens)
 
     # 3.5 Train Base-MLP
     base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
 
     # 3.6: Top-MLP for embeddings
     top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
+
+    #3.8 Different pre-trained Engish models
+    fasttext_corpus = load_fasttext_data()
+    base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, fasttext_corpus, "FastText")
+    top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, fasttext_corpus, "FastText")
+
+    glove_corpus = load_glove_data()
+    base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, glove_corpus, "Glove")
+    top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, glove_corpus, "Glove")
 
 
 # Press the green button in the gutter to run the script.
