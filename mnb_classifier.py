@@ -55,7 +55,7 @@ def base_mnb_model(target_name, cv_train_fit, target_true_train, cv_test_transfo
     target_predict = model.predict(cv_test_transform)
 
     # Write to file
-    model_description = 'The Base-MNB model ' + target_name + ' with no hyper-parameter values'
+    model_description = 'The Base-MNB model ' + target_name + ' with default hyper-parameter values'
     write_to_performance_file(
         model_description=model_description,
         target_true_test=target_true_test,

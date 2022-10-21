@@ -13,7 +13,7 @@ import time
 # File imports
 from mnb_classifier import base_mnb, top_mnb
 from dt_classifier import base_dt, top_dt
-from mlp_classifier import base_mlp, base_mlp_embeddings, top_mlp
+from mlp_classifier import base_mlp, base_mlp_embeddings, top_mlp, top_mlp_embeddings
 from embeddings import load_word2vector_data, tokenize_reddit_posts, embedding_hit_rate
 from compute_performance import flush_performance_file
 
@@ -101,25 +101,22 @@ def main():
     # flush_performance_file()
 
     # 2.3.1: Base-MNB
-    #base_mnb(data_train=data_train, data_test=data_test)
+    base_mnb(data_train=data_train, data_test=data_test)
 
     #2.3.3: Base-MLP
-    #base_mlp(data_train=data_train, data_test=data_test)
+    base_mlp(data_train=data_train, data_test=data_test)
 
     # 2.3.2: Base-DT
-    #base_dt(data_train=data_train, data_test=data_test)
+    base_dt(data_train=data_train, data_test=data_test)
 
     # 2.3.4: Top-MNB
-    #top_mnb(data_train=data_train, data_test=data_test)
+    top_mnb(data_train=data_train, data_test=data_test)
 
     # 2.3.5: Top-DT
-    #top_dt(data_train=data_train, data_test=data_test)
+    top_dt(data_train=data_train, data_test=data_test)
     
     # 2.3.6 Top-MLP
-    # start = time.time()
-    # top_mlp(data_train=data_train, data_test=data_test)
-    # end = time.time()
-    # print(end - start)
+    top_mlp(data_train=data_train, data_test=data_test)
 
     # 3.1: Load
     corpus = load_word2vector_data()
@@ -136,6 +133,9 @@ def main():
 
     # 3.5 Train Base-MLP
     base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
+
+    # 3.6: Top-MLP for embeddings
+    top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus)
 
 
 # Press the green button in the gutter to run the script.

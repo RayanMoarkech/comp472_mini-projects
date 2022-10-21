@@ -135,6 +135,53 @@ def top_mlp(data_train, data_test):
         cv_train_fit=cv_train_fit,
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test,
+        hidden_layer_sizes=[(5, 5, 5), (10, 10)],
+        activation=['logistic', 'tanh', 'relu', 'identity'],
+        solver=['adam', 'sgd']
+    )
+
+# 3.6: Top-MLP for embeddings
+def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus):
+    print()
+    print('-------------------------------------------------')
+    print('Top MLP')
+    print('-------------------------------------------------')
+
+    # Test on emotions
+    print()
+    print('Emotions:')
+    target_name = "emotions"
+
+    cv_train_fit, cv_test_transform = average_embeddings(train_tokens, test_tokens, corpus)
+    target_true_train = [data_array[1] for data_array in data_train]
+    target_true_test = [data_array[1] for data_array in data_test]
+
+    top_mlp_model(
+        target_name=target_name,
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
+        target_true_test=target_true_test,
+        hidden_layer_sizes=[(10, 5)],
+        activation=['relu'],
+        solver=['adam']
+    )
+
+    # Test on sentiments
+    print()
+    print('Sentiments:')
+    target_name = "emotions"
+
+    cv_train_fit, cv_test_transform = average_embeddings(train_tokens, test_tokens, corpus)
+    target_true_train = [data_array[1] for data_array in data_train]
+    target_true_test = [data_array[1] for data_array in data_test]
+
+    top_mlp_model(
+        target_name=target_name,
+        cv_train_fit=cv_train_fit,
+        target_true_train=target_true_train,
+        cv_test_transform=cv_test_transform,
         target_true_test=target_true_test
     )
 
@@ -142,13 +189,13 @@ def top_mlp(data_train, data_test):
 # Top-MLP model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
+def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, 
+hidden_layer_sizes, activation, solver):
     # Define the model classifier
     parameters = {
-        'hidden_layer_sizes': [(5, 5, 5), (10, 10)],
-        'max_iter': [15],
-        'activation': ['logistic', 'tanh', 'relu', 'identity'],
-        'solver': ['adam', 'sgd'],
+        'hidden_layer_sizes': hidden_layer_sizes,
+        'activation': activation,
+        'solver': solver,
         'verbose': [True],
         'early_stopping': [True]
     }
@@ -164,11 +211,11 @@ def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
     print("Best parameters: ", grid_search.best_params_)
 
     # Write to file
-    # model_description = 'The Top-MLP model ' + target_name + \
-    #                     ' with GridSearchCV and hyper-parameter alpha of list: ' + \
-    #                     ', '.join(str(alpha) for alpha in alpha_list)
-    # write_to_performance_file(
-    #     model_description=model_description,
-    #     target_true_test=target_true_test,
-    #     target_predict=target_predict
-    # )
+    model_description = 'The Top-MLP model ' + target_name + \
+                        ' with GridSearchCV and hyper-parameter hidden_layer_sizes of lists: ' + \
+                        str(hidden_layer_sizes) + ', activation of list: ' + str(activation) + 'solver of list: ' +  str(solver)
+    write_to_performance_file(
+        model_description=model_description,
+        target_true_test=target_true_test,
+        target_predict=target_predict
+    )
