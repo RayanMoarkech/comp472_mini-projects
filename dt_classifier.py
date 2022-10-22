@@ -119,6 +119,7 @@ def top_dt_model(target_name, cv_train_fit, target_true_train, cv_test_transform
 
     # Predict
     target_predict = model.predict(cv_test_transform)
+    print("Top DT Best Parameters: ", grid_search.best_params_)
 
     # Write to file
     model_description = 'The Top-DT model ' + target_name + \

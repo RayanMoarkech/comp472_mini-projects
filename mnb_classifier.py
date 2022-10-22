@@ -114,6 +114,7 @@ def top_mnb_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
 
     # Predict
     target_predict = model.predict(cv_test_transform)
+    print("Top MNB Best Parameters: ", grid_search.best_params_)
 
     # Write to file
     model_description = 'The Top-MNB model ' + target_name + \

@@ -230,7 +230,7 @@ hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
-    print("Best parameters: ", grid_search.best_params_)
+    print("Top MLP Best Parameters: ", grid_search.best_params_)
 
     # Write to file
     if embedding:
