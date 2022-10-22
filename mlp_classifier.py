@@ -91,7 +91,7 @@ def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfo
     # Define the model classifier
     # Using default parameters for MLPClassifier
     # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
-    classifier = MLPClassifier(verbose=True, early_stopping=True)
+    classifier = MLPClassifier(early_stopping=True)
 
 
     # Train the model
@@ -219,7 +219,6 @@ hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False)
         'activation': activation,
         'solver': solver,
         'max_iter': [15],
-        'verbose': [True],
         'early_stopping': [True]
     }
     
