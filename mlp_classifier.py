@@ -191,8 +191,8 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus,
     target_name = "emotions"
 
     cv_train_fit, cv_test_transform = average_embeddings(train_tokens, test_tokens, corpus)
-    target_true_train = [data_array[1] for data_array in data_train]
-    target_true_test = [data_array[1] for data_array in data_test]
+    target_true_train = [data_array[2] for data_array in data_train]
+    target_true_test = [data_array[2] for data_array in data_test]
 
     top_mlp_model(
         target_name=target_name,
@@ -212,7 +212,7 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus,
 # the emotions with index 1
 # or the sentiments with index 2
 def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, 
-hidden_layer_sizes, activation, solver, corpus_name, embedding="False"):
+hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False):
     # Define the model classifier
     parameters = {
         'hidden_layer_sizes': hidden_layer_sizes,
