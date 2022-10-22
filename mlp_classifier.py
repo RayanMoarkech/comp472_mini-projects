@@ -188,7 +188,7 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus,
     # Test on sentiments
     print()
     print('Sentiments:')
-    target_name = "emotions"
+    target_name = "sentiments"
 
     cv_train_fit, cv_test_transform = average_embeddings(train_tokens, test_tokens, corpus)
     target_true_train = [data_array[2] for data_array in data_train]
