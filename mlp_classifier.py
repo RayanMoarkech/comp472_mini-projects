@@ -1,10 +1,13 @@
 # Library imports
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
+import torch
+import os
 
 # File imports
 from compute_performance import get_true_cv_target_data, write_to_performance_file
 from embeddings import average_embeddings
+
 
 # 2.3.3: Base-MLP
 def base_mlp(data_train, data_test):
@@ -39,6 +42,7 @@ def base_mlp(data_train, data_test):
         target_true_test=target_true_test
     )
 
+
 # 3.5: Base-MLP for embeddings
 def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus, corpus_name='Word2Vec'):
     print()
@@ -65,7 +69,6 @@ def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus
         embedding=True
     )
 
-
     # Test on sentiments
     print()
     print('Sentiments:')
@@ -84,15 +87,16 @@ def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus
         embedding=True
     )
 
+
 # Base-MLP model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, corpus_name="Word2Vec", embedding=False):
+def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test,
+                   corpus_name="Word2Vec", embedding=False):
     # Define the model classifier
     # Using default parameters for MLPClassifier
     # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
     classifier = MLPClassifier(early_stopping=True)
-
 
     # Train the model
     model = classifier.fit(X=cv_train_fit, y=target_true_train)
@@ -116,6 +120,7 @@ def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfo
             target_true_test=target_true_test,
             target_predict=target_predict
         )
+
 
 # 2.3.4: Top-MLP
 def top_mlp(data_train, data_test):
@@ -155,6 +160,7 @@ def top_mlp(data_train, data_test):
         activation=['logistic', 'tanh', 'relu', 'identity'],
         solver=['adam', 'sgd']
     )
+
 
 # 3.6: Top-MLP for embeddings
 def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus, corpus_name="Word2Vec"):
@@ -211,22 +217,35 @@ def top_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus,
 # Top-MLP model that takes in the index to train and test
 # the emotions with index 1
 # or the sentiments with index 2
-def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test, 
-hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False):
-    # Define the model classifier
-    parameters = {
-        'hidden_layer_sizes': hidden_layer_sizes,
-        'activation': activation,
-        'solver': solver,
-        'max_iter': [15],
-        'early_stopping': [True]
-    }
-    
-    classifier = MLPClassifier()
-    grid_search = GridSearchCV(classifier, parameters, n_jobs=-1)
+def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test,
+                  hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False):
 
-    # Train the model
-    model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+    # Get the model file path
+    model_file_path = target_name + '-top-mlp-model'
+    model_file_exists = os.path.isfile(model_file_path)
+
+    # If model_file_exists then load the data directly
+    # else train the model
+    if model_file_exists:
+        model = torch.load(target_name + '-top-mlp-model')
+    else:
+        # Define the model classifier
+        parameters = {
+            'hidden_layer_sizes': hidden_layer_sizes,
+            'activation': activation,
+            'solver': solver,
+            'max_iter': [15],
+            'early_stopping': [True]
+        }
+
+        classifier = MLPClassifier()
+        grid_search = GridSearchCV(classifier, parameters, n_jobs=-1)
+
+        # Train the model
+        model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+
+        # Save the model
+        torch.save(grid_search, target_name + '-top-mlp-model')
 
     # Predict
     target_predict = model.predict(cv_test_transform)
@@ -236,7 +255,8 @@ hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False)
     if embedding:
         model_description = 'Embeddings: The Top-MLP model using ' + corpus_name + ' for ' + target_name + \
                             ' with GridSearchCV and hyper-parameter hidden_layer_sizes of lists: ' + \
-                            str(hidden_layer_sizes) + ', activation of list: ' + str(activation) + 'solver of list: ' +  str(solver)
+                            str(hidden_layer_sizes) + ', activation of list: ' + str(activation) + \
+                            'solver of list: ' + str(solver)
         write_to_performance_file(
             model_description=model_description,
             target_true_test=target_true_test,
@@ -244,7 +264,8 @@ hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False)
     else:
         model_description = 'The Top-MLP model for ' + target_name + \
                             ' with GridSearchCV and hyper-parameter hidden_layer_sizes of lists: ' + \
-                            str(hidden_layer_sizes) + ', activation of list: ' + str(activation) + 'solver of list: ' +  str(solver)
+                            str(hidden_layer_sizes) + ', activation of list: ' + str(activation) + \
+                            'solver of list: ' + str(solver)
         write_to_performance_file(
             model_description=model_description,
             target_true_test=target_true_test,
