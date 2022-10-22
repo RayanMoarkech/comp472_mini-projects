@@ -223,7 +223,7 @@ hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False)
     }
     
     classifier = MLPClassifier()
-    grid_search = GridSearchCV(classifier, parameters)
+    grid_search = GridSearchCV(classifier, parameters, n_jobs=-1)
 
     # Train the model
     model = grid_search.fit(X=cv_train_fit, y=target_true_train)
