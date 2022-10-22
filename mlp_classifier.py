@@ -95,7 +95,11 @@ def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfo
                    corpus_name="Word2Vec", embedding=False):
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-base-mlp-model'
+    model_file_path = './models/' + target_name + '-base-mlp-'
+    if embedding:
+        model_file_path = model_file_path + 'embedding-' + corpus_name + '-model'
+    else:
+        model_file_path = model_file_path + 'model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly
@@ -234,7 +238,11 @@ def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
                   hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False):
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-base-mlp-'
+    if embedding:
+        model_file_path = model_file_path + 'embedding-' + corpus_name + '-model'
+    else:
+        model_file_path = model_file_path + 'model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly
