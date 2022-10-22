@@ -88,7 +88,7 @@ def embedding_hit_rate(corpus, train_tokens, test_tokens):
             pass
 
     train_hit_rate = (train_hit / len(train_words)) * 100
-    print(train_hit_rate, "%")
+    print("Train hit rate", train_hit_rate, "%")
 
     test_hit = 0
     for word in test_words:
@@ -99,6 +99,6 @@ def embedding_hit_rate(corpus, train_tokens, test_tokens):
             pass
 
     test_hit_rate = (train_hit / len(train_words)) * 100
-    print(test_hit_rate, "%")
+    print("Test hit rate", test_hit_rate, "%")
 
     return train_hit_rate, train_hit_rate
