@@ -1,8 +1,8 @@
 import gensim.downloader as api
 from gensim.models.fasttext import FastText
-
 from nltk.tokenize import word_tokenize
 import numpy as np
+
 
 # 3.1: Load the data
 # To load the word2vec-google-news-300 pretrained embedding model
@@ -10,14 +10,17 @@ def load_word2vector_data():
     corpus = api.load('word2vec-google-news-300')
     return corpus
 
+
 # 3.8 Load Fasttext
 def load_fasttext_data():
     corpus = api.load('fasttext-wiki-news-subwords-300')
     return corpus
 
+
 def load_glove_data():
     corpus = api.load('glove-wiki-gigaword-300')
     return corpus
+
 
 # 3.2 Extract words from the Reddit posts using tokenizer from nlkt
 def tokenize_reddit_posts(data_train, data_test):
@@ -73,6 +76,7 @@ def average_embeddings(train_tokens, test_tokens, corpus):
 
     return train_average_embeddings, test_average_embeddings
 
+
 # 3.4 Computing hit rates of training and test sets
 def embedding_hit_rate(corpus, train_tokens, test_tokens):
     # flatten tokens to only have words, instead of list of words
@@ -84,7 +88,7 @@ def embedding_hit_rate(corpus, train_tokens, test_tokens):
         try:
             corpus[word]
             train_hit += 1
-        except (KeyError):
+        except KeyError:
             pass
 
     train_hit_rate = (train_hit / len(train_words)) * 100
@@ -95,7 +99,7 @@ def embedding_hit_rate(corpus, train_tokens, test_tokens):
         try:
             corpus[word]
             test_hit += 1
-        except (KeyError):
+        except KeyError:
             pass
 
     test_hit_rate = (train_hit / len(train_words)) * 100

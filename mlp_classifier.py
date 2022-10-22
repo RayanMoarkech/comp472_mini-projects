@@ -93,14 +93,27 @@ def base_mlp_embeddings(data_train, data_test, train_tokens, test_tokens, corpus
 # or the sentiments with index 2
 def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test,
                    corpus_name="Word2Vec", embedding=False):
-    # Define the model classifier
-    # Using default parameters for MLPClassifier
-    # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
-    classifier = MLPClassifier(early_stopping=True)
 
-    # Train the model
-    model = classifier.fit(X=cv_train_fit, y=target_true_train)
-    # print("Class priors log = ", model.class_log_prior_)
+    # Get the model file path
+    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_exists = os.path.isfile(model_file_path)
+
+    # If model_file_exists then load the data directly
+    # else train the model
+    if model_file_exists:
+        model = torch.load(model_file_path)
+    else:
+        # Define the model classifier
+        # Using default parameters for MLPClassifier
+        # classifier = MLPClassifier(hidden_layer_sizes=(100,), max_iter = 200, activation = 'relu', solver = 'adam')
+        classifier = MLPClassifier(early_stopping=True)
+
+        # Train the model
+        model = classifier.fit(X=cv_train_fit, y=target_true_train)
+        # print("Class priors log = ", model.class_log_prior_)
+
+        # Save the model
+        torch.save(classifier, model_file_path)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
@@ -140,7 +153,7 @@ def top_mlp(data_train, data_test):
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
         target_true_test=target_true_test,
-        hidden_layer_sizes=[(5, 5, 5), (10, 10)],
+        hidden_layer_sizes=[(20, 85, 45), (60, 50)],
         activation=['logistic', 'tanh', 'relu', 'identity'],
         solver=['adam', 'sgd']
     )
@@ -156,7 +169,7 @@ def top_mlp(data_train, data_test):
         target_true_train=target_true_train,
         cv_test_transform=cv_test_transform,
         target_true_test=target_true_test,
-        hidden_layer_sizes=[(5, 5, 5), (10, 10)],
+        hidden_layer_sizes=[(100, 80, 105), (85, 95)],
         activation=['logistic', 'tanh', 'relu', 'identity'],
         solver=['adam', 'sgd']
     )
@@ -221,13 +234,13 @@ def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
                   hidden_layer_sizes, activation, solver, corpus_name="Word2Vec", embedding=False):
 
     # Get the model file path
-    model_file_path = target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-top-mlp-model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly
     # else train the model
     if model_file_exists:
-        model = torch.load(target_name + '-top-mlp-model')
+        model = torch.load(model_file_path)
     else:
         # Define the model classifier
         parameters = {
@@ -243,13 +256,13 @@ def top_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
 
         # Train the model
         model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+        print("Top MLP Best Parameters: ", grid_search.best_params_)
 
         # Save the model
-        torch.save(grid_search, target_name + '-top-mlp-model')
+        torch.save(grid_search, model_file_path)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
-    print("Top MLP Best Parameters: ", grid_search.best_params_)
 
     # Write to file
     if embedding:

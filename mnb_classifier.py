@@ -1,6 +1,8 @@
 # Library imports
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import GridSearchCV
+import os
+import torch
 
 # File imports
 from compute_performance import get_true_cv_target_data, write_to_performance_file
@@ -44,12 +46,25 @@ def base_mnb(data_train, data_test):
 # the emotions with index 1
 # or the sentiments with index 2
 def base_mnb_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
-    # Define the model classifier
-    classifier = MultinomialNB()
 
-    # Train the model
-    model = classifier.fit(X=cv_train_fit, y=target_true_train)
-    # print("Class priors log = ", model.class_log_prior_)
+    # Get the model file path
+    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_exists = os.path.isfile(model_file_path)
+
+    # If model_file_exists then load the data directly
+    # else train the model
+    if model_file_exists:
+        model = torch.load(model_file_path)
+    else:
+        # Define the model classifier
+        classifier = MultinomialNB()
+
+        # Train the model
+        model = classifier.fit(X=cv_train_fit, y=target_true_train)
+        # print("Class priors log = ", model.class_log_prior_)
+
+        # Save the model
+        torch.save(classifier, model_file_path)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
@@ -101,20 +116,34 @@ def top_mnb(data_train, data_test):
 # the emotions with index 1
 # or the sentiments with index 2
 def top_mnb_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
-    # Define the model classifier
-    alpha_list = (0.5, 0, 2)
-    parameters = {
-        'alpha': alpha_list
-    }
-    classifier = MultinomialNB()
-    grid_search = GridSearchCV(classifier, parameters)
 
-    # Train the model
-    model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+    alpha_list = (0.5, 0, 2)
+
+    # Get the model file path
+    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_exists = os.path.isfile(model_file_path)
+
+    # If model_file_exists then load the data directly
+    # else train the model
+    if model_file_exists:
+        model = torch.load(model_file_path)
+    else:
+        # Define the model classifier
+        parameters = {
+            'alpha': alpha_list
+        }
+        classifier = MultinomialNB()
+        grid_search = GridSearchCV(classifier, parameters)
+
+        # Train the model
+        model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+        print("Top MNB Best Parameters: ", grid_search.best_params_)
+
+        # Save the model
+        torch.save(grid_search, model_file_path)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
-    print("Top MNB Best Parameters: ", grid_search.best_params_)
 
     # Write to file
     model_description = 'The Top-MNB model ' + target_name + \
