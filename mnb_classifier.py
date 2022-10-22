@@ -48,7 +48,7 @@ def base_mnb(data_train, data_test):
 def base_mnb_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-base-mnb-model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly
@@ -120,7 +120,7 @@ def top_mnb_model(target_name, cv_train_fit, target_true_train, cv_test_transfor
     alpha_list = (0.5, 0, 2)
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-top-mnb-model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly

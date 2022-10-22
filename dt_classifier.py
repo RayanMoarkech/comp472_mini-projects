@@ -48,7 +48,7 @@ def base_dt(data_train, data_test):
 def base_dt_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-base-dt-model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly
@@ -126,7 +126,7 @@ def top_dt_model(target_name, cv_train_fit, target_true_train, cv_test_transform
     }
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-top-dt-model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly

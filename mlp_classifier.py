@@ -95,7 +95,7 @@ def base_mlp_model(target_name, cv_train_fit, target_true_train, cv_test_transfo
                    corpus_name="Word2Vec", embedding=False):
 
     # Get the model file path
-    model_file_path = './models/' + target_name + '-top-mlp-model'
+    model_file_path = './models/' + target_name + '-base-mlp-model'
     model_file_exists = os.path.isfile(model_file_path)
 
     # If model_file_exists then load the data directly
