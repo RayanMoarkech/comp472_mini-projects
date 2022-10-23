@@ -124,6 +124,8 @@ to contribute at least one new dimension to the feature space, depending on the 
 space becomes higher dimensional and more sparse as a result. As a side effect, the classifier's job has grown more
 difficult.
 
+## 4.2 Performance Analysis
+
         Emotion Classification
 
         Model       Precision    Recall    Accuracy
