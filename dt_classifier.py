@@ -1,6 +1,8 @@
 # Library imports
 from sklearn import tree
 from sklearn.model_selection import GridSearchCV
+import os
+import torch
 
 # File imports
 from compute_performance import get_true_cv_target_data, write_to_performance_file
@@ -44,26 +46,36 @@ def base_dt(data_train, data_test):
 # the emotions with index 1
 # or the sentiments with index 2
 def base_dt_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
-    # Define the model classifier
-    classifier = tree.DecisionTreeClassifier()
 
-    # Train the model
-    model = classifier.fit(X=cv_train_fit, y=target_true_train)
-    # print("Class priors log = ", model.class_log_prior_)
+    # Get the model file path
+    model_file_path = './models/' + target_name + '-base-dt-model'
+    model_file_exists = os.path.isfile(model_file_path)
+
+    # If model_file_exists then load the data directly
+    # else train the model
+    if model_file_exists:
+        model = torch.load(model_file_path)
+    else:
+        # Define the model classifier
+        classifier = tree.DecisionTreeClassifier()
+
+        # Train the model
+        model = classifier.fit(X=cv_train_fit, y=target_true_train)
+        # print("Class priors log = ", model.class_log_prior_)
+
+        # Save the trained model
+        torch.save(classifier, model_file_path)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
 
     # Write to file
-    model_description = 'The Base-DT model ' + target_name + ' with no hyper-parameter values'
+    model_description = 'The Base-DT model ' + target_name + ' with default hyper-parameter values'
     write_to_performance_file(
         model_description=model_description,
         target_true_test=target_true_test,
         target_predict=target_predict
     )
-
-
-
 
 
 # 2.3.4: Top-DT
@@ -105,17 +117,32 @@ def top_dt(data_train, data_test):
 # or the sentiments with index 2
 def top_dt_model(target_name, cv_train_fit, target_true_train, cv_test_transform, target_true_test):
     # Define the model classifier
-    max_depth = [5,10]
-    min_samples = [2,5,10]
-    parameters = {'criterion': ['entropy'],
-                 'max_depth': max_depth,
-                  'min_samples_split': min_samples}
+    max_depth = [5, 10]
+    min_samples = [2, 5, 10]
+    parameters = {
+        'criterion': ['entropy'],
+        'max_depth': max_depth,
+        'min_samples_split': min_samples
+    }
 
-    classifier = tree.DecisionTreeClassifier()
-    grid_search = GridSearchCV(classifier, parameters)
+    # Get the model file path
+    model_file_path = './models/' + target_name + '-top-dt-model'
+    model_file_exists = os.path.isfile(model_file_path)
 
-    # Train the model
-    model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+    # If model_file_exists then load the data directly
+    # else train the model
+    if model_file_exists:
+        model = torch.load(model_file_path)
+    else:
+        classifier = tree.DecisionTreeClassifier()
+        grid_search = GridSearchCV(classifier, parameters)
+
+        # Train the model
+        model = grid_search.fit(X=cv_train_fit, y=target_true_train)
+        print("Top DT Best Parameters: ", grid_search.best_params_)
+
+        # Save the model
+        torch.save(grid_search, model_file_path)
 
     # Predict
     target_predict = model.predict(cv_test_transform)
