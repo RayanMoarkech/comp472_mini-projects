@@ -197,10 +197,20 @@ precision with 80% training data. This is because the Top DT classifier is a dec
 learning method that is used for both classification and regression. The reason why it ranked the highest in recall is
 because the sentiments category only had 4 categories which are positive, negative, ambiguous, and neutral which were
 rather simple to deal with unlike the 28 categories in emotions which is why DT model performed so poorly in emotions.
+Although, Top DT has the highest precision rate of 60%, its average weighted recall and accuracy seems to have performed 
+so poorly for sentiments. Therefore, although Top DT has the highest sentiment classification precision, it has a great 
+disadvantage with accuracy and its recall. In this case, Base MLP is ranked the highest (57% for all) in terms of precision, 
+recall, and accuracy which would be the better choice.
+
+In general, the sentiment classification always had better performance than the emotion classification for the same reasons
+mentioned above. Sentiment classification only dealt with 4 categories (neutral, positive, negative, ambiguous) so the models
+only had to deal with these 4 categories with training unlike the emotions classficiation where the models had to be trained
+to learn 28 different categories. The sentiments classification always had at least 54% recall and precision throughout its 
+models (excluding Top DT from recall).
 
 Word2Vec Classification Report:
 
-     Emotion Classification
+        Emotion Classification
 
         Model       Precision    Recall    Accuracy
 
