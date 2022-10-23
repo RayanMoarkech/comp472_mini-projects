@@ -240,3 +240,12 @@ as output. Additionally, word frequency may not always be the ideal way to repre
 Word2vec will provide a vector for a term, but more effort may be required to transform that group of vectors into a
 single vector or another format. In contrast, TF-IDF is a measurable statistic that we can apply to words in a text and
 then use to form a vector. Additionally, word2vec considers the context of the words in the corpus while TF-IDF does not.
+
+
+## 4.3 Responsibilities
+Rayan: Part 1, 2.1, 2.2, 2.3.1, 2.3.4, 2.4, analysis of 3.8
+Lujain: 2.3.2, 2.3.5, 2.5, Part 4
+Sami: 2.3.3, 2.3.6, Part 3
+
+We all contributed and divided the work equally. We also helped each other with some tasks and running the code.
+Testing, validation, review, and understanding the whole code was done by each member.
