@@ -200,9 +200,12 @@ learning method that is used for both classification and regression. The reason 
 because the sentiments category only had 4 categories which are positive, negative, ambiguous, and neutral which were
 rather simple to deal with unlike the 28 categories in emotions which is why DT model performed so poorly in emotions.
 Although, Top DT has the highest precision rate of 60%, its average weighted recall and accuracy seems to have performed 
-so poorly for sentiments. Therefore, although Top DT has the highest sentiment classification precision, it has a great 
-disadvantage with accuracy and its recall. In this case, Base MLP is ranked the highest (57% for all) in terms of precision, 
-recall, and accuracy which would be the better choice.
+so poorly for sentiments. The explanation for this leads us back to the initial comment about the effect of the dataset on 
+metrics and performance. Particularly for Decision Trees, which conduct a binary classification, there is just too much noise. 
+Sometimes, just because a statement contains words that seem to convey a certain sentiment, it does not necessarily follow that 
+this is the fact. Decision trees are not appropriate since you would need to understand the entire statement in order to use them.
+Therefore, although Top DT has the highest sentiment classification precision, it has a great disadvantage with accuracy and its recall. 
+In this case, Base MLP is ranked the highest (57% for all) in terms of precision, recall, and accuracy which would be the better choice.
 
 In general, the sentiment classification always had better performance than the emotion classification for the same reasons
 mentioned above. Sentiment classification only dealt with 4 categories (neutral, positive, negative, ambiguous) so the models
