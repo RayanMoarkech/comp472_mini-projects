@@ -25,3 +25,9 @@ The dataset is organized in an array with each element containing:
  sentiments: positive/negative/ambiguous/neutral
 ] 
 ```
+
+## Running the Code
+
+Run the main function inside the file `main.py`.
+This will run all the assignment code in chronological manner. 
+Function calls are maid in the main function to call specific tasks for each exercise number.
