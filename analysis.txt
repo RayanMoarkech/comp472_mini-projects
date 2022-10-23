@@ -1,27 +1,27 @@
 ## 2.5 Analysis of experimenting train_test_split
 
-The Classification Report for Emotions between different data splits in terms of Precision/Recall:
+The Classification Report for Emotions between different data splits in terms of weighted average Precision/Recall:
 
-     % Training      80%             65%           90%
+         % Training      80%             65%           90%
 
-     Base MNB      0.36/0.39      0.36/0.38      0.37/0.39
-     Base DT       0.38/0.36      0.37/0.36      0.38/0.37
-     Base MLP      0.41/0.44      0.41/0.44      0.42/0.44
-     Top MNB       0.36/0.39      0.35/0.38      0.37/0.40
-     Top DT        0.28/0.39      0.27/0.39      0.28/0.39
-     Top MLP       0.40/0.43      0.38/0.42      0.39/0.43
+         Base MNB      0.36/0.39      0.36/0.38      0.37/0.39
+         Base DT       0.38/0.36      0.37/0.36      0.38/0.37
+         Base MLP      0.41/0.44      0.41/0.44      0.42/0.44
+         Top MNB       0.36/0.39      0.35/0.38      0.37/0.40
+         Top DT        0.28/0.39      0.27/0.39      0.28/0.39
+         Top MLP       0.40/0.43      0.38/0.42      0.39/0.43
 
 
-The Classification Report for Sentiments between different data splits in terms of Precision/Recall:
+The Classification Report for Sentiments between different data splits in terms of weighted average Precision/Recall:
 
-     % Training      80%             65%           90%
+         % Training      80%             65%           90%
 
-     Base MNB      0.54/0.55      0.53/0.54      0.54/0.55
-     Base DT       0.56/0.54      0.55/0.53      0.57/0.56
-     Base MLP      0.57/0.57      0.56/0.56      0.57/0.58
-     Top MNB       0.54/0.55      0.53/0.54      0.54/0.55
-     Top DT        0.60/0.42      0.56/0.42      0.60/0.42
-     Top MLP       0.55/0.56      0.56/0.56      0.57/0.58
+         Base MNB      0.54/0.55      0.53/0.54      0.54/0.55
+         Base DT       0.56/0.54      0.55/0.53      0.57/0.56
+         Base MLP      0.57/0.57      0.56/0.56      0.57/0.58
+         Top MNB       0.54/0.55      0.53/0.54      0.54/0.55
+         Top DT        0.60/0.42      0.56/0.42      0.60/0.42
+         Top MLP       0.55/0.56      0.56/0.56      0.57/0.58
 
 
 
@@ -65,26 +65,26 @@ The performance results are as the following:
 
 For emotions:
 
-    Model               Precision           Recall
+            Model               Precision           Recall
 
-Base MLP Word2Vec         0.40               0.42
-Base MLP FastText         0.39               0.42
-Base MLP GloVe            0.38               0.39
-Top MLP Word2Vec          0.26               0.39
-Top MLP FastText          0.22               0.37
-Top MLP GloVe             0.22               0.36
+        Base MLP Word2Vec         0.40               0.42
+        Base MLP FastText         0.39               0.42
+        Base MLP GloVe            0.38               0.39
+        Top MLP Word2Vec          0.26               0.39
+        Top MLP FastText          0.22               0.37
+        Top MLP GloVe             0.22               0.36
 
 
 For sentiments:
 
-    Model               Precision           Recall
+            Model               Precision           Recall
 
-Base MLP Word2Vec         0.53               0.54
-Base MLP FastText         0.55               0.55
-Base MLP GloVe            0.51               0.51
-Top MLP Word2Vec          0.52               0.52
-Top MLP FastText          0.52               0.53
-Top MLP GloVe             0.49               0.49
+        Base MLP Word2Vec         0.53               0.54
+        Base MLP FastText         0.55               0.55
+        Base MLP GloVe            0.51               0.51
+        Top MLP Word2Vec          0.52               0.52
+        Top MLP FastText          0.52               0.53
+        Top MLP GloVe             0.49               0.49
 
 
 It can be noticed that the precision and recall of the different embeddings are really close to each other for each
@@ -99,7 +99,8 @@ the model dictionary. This is a huge advantage of this method.
 ## 4.1 Dataset Analysis
 
 The dataset is a collection of 58,000 reddit comments extracted by Demszky et al.
-The comments have been labeled into 28 emotion classes and they can be used to detect sentiment which is categorized into 4 categories:
+The comments have been labeled into 28 emotion classes, and they can be used to detect sentiment which is categorized
+into 4 categories:
 -	Positive
 -	Negative
 -	Ambiguous
@@ -117,10 +118,11 @@ categories, leading to errors. This is true for the sentiment classification as 
 comments pales in comparison to those that are neutral or supportive. Since there isn't enough data to train the model
 for ambiguous comments, this would make evaluating the model for ambiguous Reddit comments more difficult.
 
-Another impact that the dataset can have on the performance is that Reddit’s human-generated comments are full with noise
+Another impact that the dataset can have on the performance is that Reddit’s human-generated comments are full of noise
 that might negatively impact the findings of the sentiment classification procedure. Furthermore, every new term seems
 to contribute at least one new dimension to the feature space, depending on the features generating method. The feature
-space becomes higher dimensional and more sparse as a result. As a side effect, the classifier's job has grown more difficult.
+space becomes higher dimensional and more sparse as a result. As a side effect, the classifier's job has grown more
+difficult.
 
         Emotion Classification
 
