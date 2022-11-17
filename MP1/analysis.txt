@@ -1,0 +1,251 @@
+## 2.5 Analysis of experimenting train_test_split
+
+The Classification Report for Emotions between different data splits in terms of weighted average Precision/Recall:
+
+         % Training      80%             65%           90%
+
+         Base MNB      0.36/0.39      0.36/0.38      0.37/0.39
+         Base DT       0.38/0.36      0.37/0.36      0.38/0.37
+         Base MLP      0.41/0.44      0.41/0.44      0.42/0.44
+         Top MNB       0.36/0.39      0.35/0.38      0.37/0.40
+         Top DT        0.28/0.39      0.27/0.39      0.28/0.39
+         Top MLP       0.40/0.43      0.38/0.42      0.39/0.43
+
+
+The Classification Report for Sentiments between different data splits in terms of weighted average Precision/Recall:
+
+         % Training      80%             65%           90%
+
+         Base MNB      0.54/0.55      0.53/0.54      0.54/0.55
+         Base DT       0.56/0.54      0.55/0.53      0.57/0.56
+         Base MLP      0.57/0.57      0.56/0.56      0.57/0.58
+         Top MNB       0.54/0.55      0.53/0.54      0.54/0.55
+         Top DT        0.60/0.42      0.56/0.42      0.60/0.42
+         Top MLP       0.55/0.56      0.56/0.56      0.57/0.58
+
+
+
+
+Analysis:
+There was not much difference between the values between the 80% training set and 65% training set experiment.
+Precision and recall either remained the same or decreased slightly in all classifiers making the difference negligible.
+The maximum margin of decrease was 2% precision and 1% recall.
+It seems that, when you give your model more training sets, the recall is enhanced because the higher the recall, the
+more positive samples are detected. That is why, there is a better recall performance when feeding 80% of the data as
+training set to the model, rather than 65%.
+
+In terms of precision in the sentiment classification, the Top DT classifier performed the best with 60% precision with
+80% training data, however 56% precision with 65% training data.
+
+The 90% training set experiment had a better performance in terms of precision and recall for all classifiers but is still
+a negligible difference. The maximum margin of increase was 1% increase overall given the 10% increase in training which
+was expected.
+
+
+## 3.8 Analysis of different Pre-Trained Embedding models
+
+For this step, the following English pretrained embedding models where used:
+- FastText
+- GloVe
+
+About FastText:
+
+FastText is another word embedding method that is an extension of the Word2Vec model.
+fastText represents each word as an n-gram of characters, instead of learning vectors for words directly.
+This helps capture the meaning of shorter words and allows the embeddings to understand suffixes and prefixes.
+FastText works well with rare words. So even if a word was not seen during training, it can be broken down into n-grams
+to get its embeddings.
+
+About GloVe:
+
+GloVe is short for Global Vector. The model produces a vector space with meaningful substructure.
+It is built on global matrix factorization and local context window.
+
+The performance results are as the following:
+
+For emotions:
+
+            Model               Precision           Recall
+
+        Base MLP Word2Vec         0.40               0.42
+        Base MLP FastText         0.39               0.42
+        Base MLP GloVe            0.38               0.39
+        Top MLP Word2Vec          0.26               0.39
+        Top MLP FastText          0.22               0.37
+        Top MLP GloVe             0.22               0.36
+
+
+For sentiments:
+
+            Model               Precision           Recall
+
+        Base MLP Word2Vec         0.53               0.54
+        Base MLP FastText         0.55               0.55
+        Base MLP GloVe            0.51               0.51
+        Top MLP Word2Vec          0.52               0.52
+        Top MLP FastText          0.52               0.53
+        Top MLP GloVe             0.49               0.49
+
+
+It can be noticed that the precision and recall of the different embeddings are really close to each other for each
+classification and each model. These results are expected since fastText and GloVe are an extension of Word2Vec.
+Therefore, they should have a similar result. It can be also noticed that there is a slight difference, which can help
+in the ranking: (1) fastText, (2) Word2Vec, (3) GloVe. As noted in the about section, fastText uses another way to
+analyse the output. It does not use vectors like Word2Vec and GloVe, which make it faster and more accurate.
+In addition, Word2Vec and GloVe both fail to provide any vector representation for words that are not in
+the model dictionary. This is a huge advantage of this method.
+
+
+## 4.1 Dataset Analysis
+
+The dataset is a collection of 58,000 reddit comments extracted by Demszky et al.
+The comments have been labeled into 28 emotion classes, and they can be used to detect sentiment which is categorized
+into 4 categories:
+-	Positive
+-	Negative
+-	Ambiguous
+-	Neutral
+
+So every single emotion identified in the Reddit comment is classified into one of the 4 categories above.
+
+Following the extraction of the posts along with the two sets of labels (emotions and sentiments), the distribution
+of the posts within each category was plotted.
+
+The GoEmotion dataset's distribution is insufficient to establish a strong relationship, particularly for emotion,
+as the majority of Reddit comments fall into the category of sadness, love, and neutral while the remaining emotions—such
+as fear and nervousness—are scarcely represented. Lack of data would prevent the model from effectively learning certain
+categories, leading to errors. This is true for the sentiment classification as well. The number of ambiguous Reddit
+comments pales in comparison to those that are neutral or supportive. Since there isn't enough data to train the model
+for ambiguous comments, this would make evaluating the model for ambiguous Reddit comments more difficult.
+
+Another impact that the dataset can have on the performance is that Reddit’s human-generated comments are full of noise
+that might negatively impact the findings of the sentiment classification procedure. Furthermore, every new term seems
+to contribute at least one new dimension to the feature space, depending on the features generating method. The feature
+space becomes higher dimensional and more sparse as a result. As a side effect, the classifier's job has grown more
+difficult.
+
+## 4.2 Performance Analysis
+
+        Emotion Classification
+
+        Model       Precision    Recall    Accuracy
+
+        Base MNB      0.36        0.39       0.39
+        Base DT       0.38        0.36       0.36
+        Base MLP      0.41        0.44       0.44
+        Top MNB       0.36        0.39       0.39
+        Top DT        0.28        0.39       0.39
+        Top MLP       0.40        0.43       0.43
+
+        Sentiment Classification
+
+        Model       Precision    Recall    Accuracy
+
+        Base MNB      0.54        0.55       0.55
+        Base DT       0.56        0.54       0.54
+        Base MLP      0.57        0.57       0.57
+        Top MNB       0.54        0.55       0.55
+        Top DT        0.60        0.42       0.42
+        Top MLP       0.55        0.56       0.56
+
+
+The models for emotions are ranked in the order of best precision:
+-	Base MLP
+-	Top MLP
+-	Base DT
+-	Base MNB = Top MNB
+-	Top DT
+
+The models for emotions are ranked in the order of best recall:
+-	Base MLP
+-	Top MLP
+-	Top DT = Top MNB = Base MNB
+-	Base DT
+
+
+The models for sentiments are ranked in the order of best precision:
+- Top DT
+- Base MLP
+- Base DT
+- Top MLP
+- Base MNB = Top MNB
+
+The models for sentiments are ranked in the order of best recall:
+- Base MLP
+- Top MLP
+- Base MBN = Top MNB
+- Base DT
+- Top DT
+
+
+In terms of accuracy, the models are ranked in the order of the best accuracy which is the same as the order of best recall.
+At first this was not expected, but it makes sense because the accuracy is the average weighted recall.
+
+The best model for precision and recall as can be seen, is the Base MLP leading in both 41% precision and 44% recall
+with the highest accuracy of 44% which was expected since a multilayer perceptron tries to recall patterns in sequential
+input, processing multidimensional data necessitates a "large" number of parameters. Data travels from the input to the
+output layer of an MLP in the forward direction, much like a feed forward network. With the help of the back propagation
+learning method, the MLP's neurons are taught. MLPs may resolve issues that are not linearly separable since they are
+made to approximate any continuous function. Pattern classification, recognition, prediction, and approximation are the
+main application cases for MLP. Hence, the reason why MLP scored the highest across all the metrics and among the other models.
+
+Since Base MLP, which was placed second, is likewise a multi-layer perceptron, it may be used in place of Top MLP because
+the variations in their results are insignificant. Base MLP operates more quickly than Top MLP, which is a benefit, but
+Top MLP has a significant drawback due to the processing time, which is considerably longer and would only require values
+that are not perfect in order to operate more quickly.
+
+However, it seems that in the models for sentiments classification, the Top DT classifier performed the best with 60%
+precision with 80% training data. This is because the Top DT classifier is a decision tree classifier which is a supervised
+learning method that is used for both classification and regression. The reason why it ranked the highest in recall is
+because the sentiments category only had 4 categories which are positive, negative, ambiguous, and neutral which were
+rather simple to deal with unlike the 28 categories in emotions which is why DT model performed so poorly in emotions.
+Although, Top DT has the highest precision rate of 60%, its average weighted recall and accuracy seems to have performed 
+so poorly for sentiments. It seems to have had less false positives compared to false negatives. The explanation for this 
+leads us back to the initial comment about the effect of the dataset on metrics and performance. Particularly for Decision Trees, 
+which conduct a binary classification, there is just too much noise. Sometimes, just because a statement contains words that 
+seem to convey a certain sentiment, it does not necessarily follow that this is the fact. Decision trees are not appropriate 
+since you would need to understand the entire statement in order to use them.
+
+Therefore, although Top DT has the highest sentiment classification precision, it has a great disadvantage with accuracy and its recall. 
+In this case, Base MLP is ranked the highest (57% for all) in terms of precision, recall, and accuracy which would be the better choice.
+
+In general, the sentiment classification always had better performance than the emotion classification for the same reasons
+mentioned above. Sentiment classification only dealt with 4 categories (neutral, positive, negative, ambiguous) so the models
+only had to deal with these 4 categories with training unlike the emotions classficiation where the models had to be trained
+to learn 28 different categories. The sentiments classification always had at least 54% recall and precision throughout its 
+models (excluding Top DT from recall).
+
+Word2Vec Classification Report:
+
+        Emotion Classification
+
+        Model       Precision    Recall    Accuracy
+
+        Base MLP      0.40        0.42       0.42
+        Top MLP       0.26        0.39       0.39
+
+        Sentiment Classification
+
+        Model       Precision    Recall    Accuracy
+
+        Base MLP      0.53        0.54       0.54
+        Top MLP       0.52        0.52       0.52
+
+
+When comparing Word2Vec with TF-IDF, Word2Vec performed better in terms of precision and recall for both emotions
+and sentiments classification. This is because Word2Vec is a two-layer neural network that is trained to reconstruct
+co-occurrence matrices from the corpus. Word2Vec is a method that is used to generate word embeddings by training a
+neural network to predict the context of words in a corpus. It takes a text corpus as input and produces the word vectors
+as output. Additionally, word frequency may not always be the ideal way to represent content.
+Word2vec will provide a vector for a term, but more effort may be required to transform that group of vectors into a
+single vector or another format. In contrast, TF-IDF is a measurable statistic that we can apply to words in a text and
+then use to form a vector. Additionally, word2vec considers the context of the words in the corpus while TF-IDF does not.
+
+
+## 4.3 Responsibilities
+Rayan: Part 1, 2.1, 2.2, 2.3.1, 2.3.4, 2.4, analysis of 3.8
+Lujain: 2.3.2, 2.3.5, 2.5, Part 4
+Sami: 2.3.3, 2.3.6, Part 3
+
+We all contributed and divided the work equally. We also helped each other with some tasks and running the code.
+Testing, validation, review, and understanding the whole code was done by each member.

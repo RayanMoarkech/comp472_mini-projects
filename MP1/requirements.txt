@@ -1,0 +1,6 @@
+scikit-learn
+gensim
+nltk
+numpy
+matplotlib
+torch
