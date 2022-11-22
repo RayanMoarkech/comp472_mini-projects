@@ -1,5 +1,0 @@
-scikit-learn
-nltk
-numpy
-matplotlib
-torch
