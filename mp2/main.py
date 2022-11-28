@@ -15,7 +15,7 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    sample_mod(game=games[0])
+    sample_mod(initial_game=games[0])
 
 
 # A sample function with some board manipulations with RushHour methods
