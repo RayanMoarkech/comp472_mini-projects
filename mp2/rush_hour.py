@@ -94,8 +94,9 @@ class RushHour:
         
         return True
 
-
-    def get_all_next_valid_states(self):
+    # Returns a list of dictionaries of valid states
+    # Dictionary includes 'rushHour' as a valid RushHour object and the 'vehicleName' as the vehicle name moved
+    def get_all_next_valid_states(self) -> list[{any, str}]:
         valid_states = []
         for vehicle in self.vehicles:
             for move in Move:
@@ -103,8 +104,11 @@ class RushHour:
                     new_rush_hour = copy.deepcopy(self)
                     print(move, i, vehicle.name)
                     valid_move = new_rush_hour.move_vehicle(move, i, vehicle.name)
-                    if (valid_move):
-                        valid_states.append(new_rush_hour)
+                    if valid_move:
+                        valid_states.append({
+                            'rushHour': new_rush_hour,
+                            'vehicleName': vehicle.name
+                        })
         return valid_states
 
     # Checks if the position of the vehicle A is at the solvable position
@@ -169,28 +173,29 @@ class Vehicle:
         self.size += 1
 
     # Takes in the move: Move enum, distance: int
+    # Fuel will be reduced based on distance
     def move(self, move, distance):
         rotation = self.get_rotation()
         if move == Move.UP and rotation == Rotation.VERTICAL:
             # Logic to move up
             for position in self.positions:
                 position.y -= distance
-            self.fuel_limit -= 1
+            self.fuel_limit -= distance
         elif move == Move.DOWN and rotation == Rotation.VERTICAL:
             # Logic to move down
             for position in self.positions:
                 position.y += distance
-            self.fuel_limit -= 1
+            self.fuel_limit -= distance
         elif move == Move.LEFT and rotation == Rotation.HORIZONTAL:
             # Logic to move left
             for position in self.positions:
                 position.x -= distance
-            self.fuel_limit -= 1
+            self.fuel_limit -= distance
         elif move == Move.RIGHT and rotation == Rotation.HORIZONTAL:
             # Logic to move right
             for position in self.positions:
                 position.x += distance
-            self.fuel_limit -= 1
+            self.fuel_limit -= distance
 
 
 # Position class
