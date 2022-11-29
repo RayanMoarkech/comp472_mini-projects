@@ -30,8 +30,8 @@ class RushHour:
                 return vehicle
 
     def is_free_at(self, x, y) -> bool:
-        print(x)
-        print(y)
+        # print(x)
+        # print(y)
         if x <= -1 or y <= -1 or x >= 6 or y >= 6:
             return False
         return self.board[y][x] == '.'
@@ -49,7 +49,7 @@ class RushHour:
             for index in range(distance):
                 is_free = self.is_free_at(x=back.x, y=(back.y - index - 1))
                 if not is_free:
-                    print("Cannot move up")
+                    # print("Cannot move up")
                     return False
         elif move == Move.DOWN and rotation == Rotation.VERTICAL:
             # Logic to move down
@@ -57,7 +57,7 @@ class RushHour:
             for index in range(distance):
                 is_free = self.is_free_at(x=front.x, y=(front.y + index + 1))
                 if not is_free:
-                    print("Cannot move down")
+                    # print("Cannot move down")
                     return False
         elif move == Move.LEFT and rotation == Rotation.HORIZONTAL:
             # Logic to move left
@@ -65,7 +65,7 @@ class RushHour:
             for index in range(distance):
                 is_free = self.is_free_at(x=(back.x - index - 1), y=back.y)
                 if not is_free:
-                    print("Cannot move left")
+                    # print("Cannot move left")
                     return False
         elif move == Move.RIGHT and rotation == Rotation.HORIZONTAL:
             # Logic to move right
@@ -73,11 +73,11 @@ class RushHour:
             for index in range(distance):
                 is_free = self.is_free_at(x=(front.x + index + 1), y=front.y)
                 if not is_free:
-                    print("Cannot move right")
+                    # print("Cannot move right")
                     return False
 
         if not is_free:
-            print("Cannot move")
+            # print("Cannot move")
             return False
 
         # Replace the vehicle position with . in the board
@@ -85,7 +85,7 @@ class RushHour:
             self.board[position.y][position.x] = "."
 
         # Move the vehicle
-        print("Can move")
+        # print("Can move")
         vehicle.move(move=move, distance=distance)
 
         # Register the new vehicle positions in the board
@@ -101,7 +101,6 @@ class RushHour:
             for move in Move:
                 for i in range(1, 5):
                     new_rush_hour = copy.deepcopy(self)
-                    print(move, i, vehicle.name)
                     valid_move = new_rush_hour.move_vehicle(move, i, vehicle.name)
                     if (valid_move):
                         valid_states.append(new_rush_hour)
@@ -111,6 +110,9 @@ class RushHour:
     def valid_A(self):
         vehicle = self.get_vehicle("A")
         return vehicle.get_rotation() == Rotation.HORIZONTAL and vehicle.positions[0].y == 2
+    
+    def solved(self):
+        return self.board[2][5] == "A"
 
 
 # Vehicle class
