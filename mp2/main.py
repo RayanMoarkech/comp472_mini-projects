@@ -4,7 +4,7 @@ import copy
 
 
 # Global Variables
-input_file = "metadata/input/sample-input.txt"
+input_file = "mp2/metadata/input/sample-input.txt"
 
 
 # Main method of the code
@@ -30,23 +30,32 @@ def sample_mod(initial_game):
 
     print()
 
-    # Move M down 2 spots
-    game.move_vehicle(Move.DOWN, 2, "M")
-    for line in game.board:
-        for el in line:
-            print(el, end=" ")
+    # # Move M down 2 spots
+    # game.move_vehicle(Move.DOWN, 2, "M")
+    # for line in game.board:
+    #     for el in line:
+    #         print(el, end=" ")
+    #     print()
+
+    # print()
+
+    # # Move A right once
+    # game.move_vehicle(Move.RIGHT, 1, "A")
+    # for line in game.board:
+    #     for el in line:
+    #         print(el, end=" ")
+    #     print()
+
+    # print()
+
+    valid_states = game.get_all_next_valid_states()
+
+    for state in valid_states:
+        for line in state.board:
+            for el in line:
+                print(el, end=" ")
+            print()
         print()
-
-    print()
-
-    # Move A right once
-    game.move_vehicle(Move.RIGHT, 1, "A")
-    for line in game.board:
-        for el in line:
-            print(el, end=" ")
-        print()
-
-    print()
 
     # Get vehicle position
     print(game.get_vehicle("A").positions)
