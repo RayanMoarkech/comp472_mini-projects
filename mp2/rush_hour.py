@@ -79,6 +79,11 @@ class RushHour:
         for position in vehicle.positions:
             self.board[position.y][position.x] = vehicle_name
 
+    # Checks if the position of the vehicle A is at the solvable position
+    def valid_A(self):
+        vehicle = self.get_vehicle("A")
+        return vehicle.get_rotation() == Rotation.HORIZONTAL and vehicle.positions[0].y == 2
+
 
 # Vehicle class
 class Vehicle:
