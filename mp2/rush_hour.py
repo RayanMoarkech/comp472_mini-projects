@@ -1,6 +1,6 @@
 import string
 from enum import Enum
-
+import copy
 
 class Move(Enum):
     UP = "up"
@@ -32,6 +32,8 @@ class RushHour:
     def is_free_at(self, x, y) -> bool:
         print(x)
         print(y)
+        if x <= -1 or y <= -1 or x >= 6 or y >= 6:
+            return False
         return self.board[y][x] == '.'
 
     # Takes in the move: Move enum, distance: int, vehicle_name: string
@@ -46,38 +48,64 @@ class RushHour:
             back = vehicle.get_back()
             for index in range(distance):
                 is_free = self.is_free_at(x=back.x, y=(back.y - index - 1))
+                if not is_free:
+                    print("Cannot move up")
+                    return False
         elif move == Move.DOWN and rotation == Rotation.VERTICAL:
             # Logic to move down
             front = vehicle.get_front()
             for index in range(distance):
-                print(index)
                 is_free = self.is_free_at(x=front.x, y=(front.y + index + 1))
-                print(is_free)
+                if not is_free:
+                    print("Cannot move down")
+                    return False
         elif move == Move.LEFT and rotation == Rotation.HORIZONTAL:
             # Logic to move left
             back = vehicle.get_back()
             for index in range(distance):
                 is_free = self.is_free_at(x=(back.x - index - 1), y=back.y)
+                if not is_free:
+                    print("Cannot move left")
+                    return False
         elif move == Move.RIGHT and rotation == Rotation.HORIZONTAL:
             # Logic to move right
             front = vehicle.get_front()
             for index in range(distance):
                 is_free = self.is_free_at(x=(front.x + index + 1), y=front.y)
+                if not is_free:
+                    print("Cannot move right")
+                    return False
 
         if not is_free:
             print("Cannot move")
-            return
+            return False
 
         # Replace the vehicle position with . in the board
         for position in vehicle.positions:
             self.board[position.y][position.x] = "."
 
         # Move the vehicle
+        print("Can move")
         vehicle.move(move=move, distance=distance)
 
         # Register the new vehicle positions in the board
         for position in vehicle.positions:
             self.board[position.y][position.x] = vehicle_name
+        
+        return True
+
+
+    def get_all_next_valid_states(self):
+        valid_states = []
+        for vehicle in self.vehicles:
+            for move in Move:
+                for i in range(1, 5):
+                    new_rush_hour = copy.deepcopy(self)
+                    print(move, i, vehicle.name)
+                    valid_move = new_rush_hour.move_vehicle(move, i, vehicle.name)
+                    if (valid_move):
+                        valid_states.append(new_rush_hour)
+        return valid_states
 
     # Checks if the position of the vehicle A is at the solvable position
     def valid_A(self):

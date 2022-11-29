@@ -1,5 +1,6 @@
 from file import get_games
 from rush_hour import Move
+from heuristics import get_h1, get_h2
 import copy
 
 
@@ -30,23 +31,36 @@ def sample_mod(initial_game):
 
     print()
 
-    # Move M down 2 spots
-    game.move_vehicle(Move.DOWN, 2, "M")
-    for line in game.board:
-        for el in line:
-            print(el, end=" ")
+    # # Move M down 2 spots
+    # game.move_vehicle(Move.DOWN, 2, "M")
+    # for line in game.board:
+    #     for el in line:
+    #         print(el, end=" ")
+    #     print()
+
+    # print()
+
+    # # Move A right once
+    # game.move_vehicle(Move.RIGHT, 1, "A")
+    # for line in game.board:
+    #     for el in line:
+    #         print(el, end=" ")
+    #     print()
+
+    # print()
+
+    valid_states = game.get_all_next_valid_states()
+
+    for state in valid_states:
+        for line in state.board:
+            for el in line:
+                print(el, end=" ")
+            print()
         print()
 
-    print()
-
-    # Move A right once
-    game.move_vehicle(Move.RIGHT, 1, "A")
-    for line in game.board:
-        for el in line:
-            print(el, end=" ")
-        print()
-
-    print()
+    for state in valid_states:
+        print("h1", get_h1(state))
+        print("h2", get_h2(state))
 
     # Get vehicle position
     print(game.get_vehicle("A").positions)
