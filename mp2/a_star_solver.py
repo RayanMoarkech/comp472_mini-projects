@@ -19,6 +19,6 @@ def main(rush_hour: RushHour, heuristic_used: int):
 
     # Print all possible rush hours states
     for valid_rush_hour in valid_rush_hour_states:
-        write_search_file(file_name=file_name, mode='a', f=1, h=0, g=1, rush_hour=valid_rush_hour['rushHour'],
+        write_search_file(file_name=file_name, mode='a', f=1, g=0, h=1, rush_hour=valid_rush_hour['rushHour'],
                           moved_vehicle_name=valid_rush_hour['vehicleName'])
 
