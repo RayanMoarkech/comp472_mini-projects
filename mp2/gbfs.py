@@ -1,12 +1,25 @@
 from rush_hour import RushHour
+from priority_queue import PriorityQueue
 
-# def get_all_next_valid_states(rush_hour: RushHour):
-#     valid_states = []
-#     for vehicle in rush_hour.vehicles:
-#         for move in [Move.UP, Move.DOWN, Move.LEFT, Move.RIGHT]:
-#             for i in range(1, 6):
-#                 if rush_hour.is_valid_move(vehicle.name, move, i):
-#                     new_rush_hour = copy.deepcopy(rush_hour)
-#                     new_rush_hour.move_vehicle(move, i, vehicle.name)
-#                     valid_states.append(new_rush_hour)
-#     return valid_states
+
+def greedy_bfs(rush_hour: RushHour, h):
+    pritority_queue = PriorityQueue()
+    # Add the initial state to the queue
+    pritority_queue.push(rush_hour, h(rush_hour))
+    for i in range(3):
+    # while not rush_hour.solved():
+        # Get the next state
+        rush_hour = pritority_queue.pop()
+        # Get all the next valid states
+        valid_states = rush_hour.get_all_next_valid_states()
+        # Add the valid states to the queue
+        for state in valid_states:
+            pritority_queue.push(state, h(state))
+    for el in pritority_queue._queue:
+        print("Heuristic: ", el[0])
+        print("Priority: ", el[1])
+        for line in el[2].board:
+            for el in line:
+                print(el, end=" ")
+            print()
+        print()
