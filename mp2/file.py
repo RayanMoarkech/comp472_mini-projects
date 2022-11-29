@@ -1,6 +1,8 @@
 from collections import defaultdict
 from rush_hour import RushHour, Vehicle, Position
 
+import os
+
 
 # Get all the RushHour games from a file
 # RushHour game = boards and fuel limits
@@ -92,3 +94,20 @@ def get_fuel_limits(line, default_fuel_limit):
     # Create a defaultdict that returns the default_fuel_limit if key does not exist
     fuel_limits = defaultdict(lambda: default_fuel_limit, fuel_limits)
     return fuel_limits
+
+
+# Write to search text
+#
+def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_hour: RushHour,
+                      moved_vehicle_name: str = ''):
+    if not os.path.exists('output'):
+        os.makedirs('output')
+    file = open(os.path.join('output', file_name), mode)
+    file.write('%s %s %s ' % (f, g, h))
+    for y in range(len(rush_hour.board)):
+        for x in range(len(rush_hour.board[y])):
+            file.write(rush_hour.board[y][x])
+    if moved_vehicle_name:
+        file.write(' %s%s' % (moved_vehicle_name, rush_hour.get_vehicle(vehicle_name=moved_vehicle_name).fuel_limit))
+    file.write('\n')
+    file.close()
