@@ -1,9 +1,10 @@
 from rush_hour import RushHour
 
+
 # Gets the heuristic h1 of a rush hour game
 # Takes in RushHour object
 # Returns the heuristic value
-def get_h1(rush_hour: RushHour):
+def get_h1(rush_hour: RushHour) -> int:
     ambulance = rush_hour.get_vehicle("A")
     front = ambulance.get_front()
     heuristic = 0
@@ -14,10 +15,11 @@ def get_h1(rush_hour: RushHour):
             heuristic += 1
     return heuristic
 
+
 # Gets the heuristic h2 of a rush hour game
 # Takes in RushHour object
 # Returns the heuristic value
-def get_h2(rush_hour: RushHour):
+def get_h2(rush_hour: RushHour) -> int:
     ambulance = rush_hour.get_vehicle("A")
     front = ambulance.get_front()
     heuristic = 0
