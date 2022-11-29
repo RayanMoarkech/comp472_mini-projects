@@ -98,7 +98,7 @@ class RushHour:
     def get_all_next_valid_states(self):
         valid_states = []
         for vehicle in self.vehicles:
-            for move in [Move.UP, Move.DOWN, Move.LEFT, Move.RIGHT]:
+            for move in Move:
                 for i in range(1, 5):
                     new_rush_hour = copy.deepcopy(self)
                     print(move, i, vehicle.name)

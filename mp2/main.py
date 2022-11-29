@@ -1,10 +1,11 @@
 from file import get_games
 from rush_hour import Move
+from heuristics import get_h1, get_h2
 import copy
 
 
 # Global Variables
-input_file = "mp2/metadata/input/sample-input.txt"
+input_file = "metadata/input/sample-input.txt"
 
 
 # Main method of the code
@@ -56,6 +57,10 @@ def sample_mod(initial_game):
                 print(el, end=" ")
             print()
         print()
+
+    for state in valid_states:
+        print("h1", get_h1(state))
+        print("h2", get_h2(state))
 
     # Get vehicle position
     print(game.get_vehicle("A").positions)
