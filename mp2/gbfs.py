@@ -48,9 +48,12 @@ def greedy_bfs(initial_state, h):
     # node[1] = index
     # node[2] = {'rideHour': RushHour, 'vehicleName': str}
     # node[3] = []
-    while not node[2]['rushHour'].solved():
+    # while not node[2]['rushHour'].solved():
+    for i in range(6):
         node = pritority_queue._queue[0]
         pritority_queue.pop()
+        print("----------------------------------------------------")
+        print("pop:  ", end=" ")
         print(node[0], end=" ")
         for line in node[2]['rushHour'].board:
             for el in line:
@@ -58,6 +61,7 @@ def greedy_bfs(initial_state, h):
         for node_visited in node[3]:
             print(" ", node_visited, end="")
         print()
+        print("---------------------------------------------------")
         # Get all the next valid states
         valid_states = node[2]['rushHour'].get_all_next_valid_states()
         for state in valid_states:
@@ -66,5 +70,15 @@ def greedy_bfs(initial_state, h):
             nodes_visited = node[3].copy()
             nodes_visited.insert(0, vehicle_name + str(fuel_limit))
             pritority_queue.push(item=state, node_list=nodes_visited, priority=h(state['rushHour']))
+            # pritority_queue.sort()
+        for state in pritority_queue._queue:
+            print("push: ", end=" ")
+            print(state[0], end=" ")
+            for line in state[2]['rushHour'].board:
+                for el in line:
+                    print(el, end="")
+            for node_visited in state[3]:
+                print(" ", node_visited, end="")
+            print()
 
 
