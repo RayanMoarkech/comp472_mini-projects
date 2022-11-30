@@ -1,6 +1,7 @@
 from file import get_games
 from rush_hour import Move
 from heuristics import get_h1, get_h2
+from gbfs import greedy_bfs
 from a_star_solver import main as a_star_solver
 
 from gbfs import greedy_bfs
@@ -65,6 +66,16 @@ def sample_mod(initial_game):
     #     print("h2", get_h2(state))
 
     greedy_bfs({'rushHour': game, 'vehicleName': ''}, get_h1)
+    #     print("h1", get_h1(state))
+    #     print("h2", get_h2(state))
+    for state in valid_states:
+        for line in state['game'].board:
+            for el in line:
+                print(el, end=" ")
+            print()
+        print()
+
+    greedy_bfs(game, get_h1)
 
     # Get vehicle position
     # print(game.get_vehicle("A").positions)
