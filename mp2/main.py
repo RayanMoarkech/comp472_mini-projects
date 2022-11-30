@@ -1,8 +1,10 @@
 from file import get_games
 from rush_hour import Move
 from heuristics import get_h1, get_h2
+from gbfs import greedy_bfs
 from a_star_solver import main as a_star_solver
 
+from gbfs import greedy_bfs
 import copy
 
 
@@ -12,16 +14,14 @@ input_file = "metadata/input/sample-input.txt"
 
 # Main method of the code
 def main():
-    print("Hello")
-
     # Get a list of RushHour objects from an input file
     games = get_games(filename=input_file)
 
     # Board manipulation
-    # sample_mod(initial_game=games[0])
+    sample_mod(initial_game=games[1])
 
     # A Star Algorithm
-    a_star_solver(rush_hour=games[0], heuristic_used=1)
+    #a_star_solver(rush_hour=games[0], heuristic_used=1)
 
 
 # A sample function with some board manipulations with RushHour methods
@@ -29,12 +29,12 @@ def sample_mod(initial_game):
     # Deep copy the array to be modified and used
     game = copy.deepcopy(initial_game)
 
-    for line in game.board:
-        for el in line:
-            print(el, end=" ")
-        print()
+    # for line in game.board:
+    #     for el in line:
+    #         print(el, end=" ")
+    #     print()
 
-    print()
+    # print()
 
     # # Move M down 2 spots
     # game.move_vehicle(Move.DOWN, 2, "M")
@@ -45,17 +45,29 @@ def sample_mod(initial_game):
 
     # print()
 
-    # # Move A right once
+    # Move A right once
     # game.move_vehicle(Move.RIGHT, 1, "A")
     # for line in game.board:
     #     for el in line:
     #         print(el, end=" ")
     #     print()
 
-    # print()
+    #valid_states = game.get_all_next_valid_states()
 
-    valid_states = game.get_all_next_valid_states()
+    # for state in valid_states:
+    #     for line in state.board:
+    #         for el in line:
+    #             print(el, end=" ")
+    #         print()
+    #     print()
 
+    # for state in valid_states:
+    #     print("h1", get_h1(state['game']))
+    #     print("h2", get_h2(state))
+
+    greedy_bfs({'rushHour': game, 'vehicleName': ''}, get_h1)
+    #     print("h1", get_h1(state))
+    #     print("h2", get_h2(state))
     for state in valid_states:
         for line in state['game'].board:
             for el in line:
@@ -63,12 +75,10 @@ def sample_mod(initial_game):
             print()
         print()
 
-    for state in valid_states:
-        print("h1", get_h1(state))
-        print("h2", get_h2(state))
+    greedy_bfs(game, get_h1)
 
     # Get vehicle position
-    print(game.get_vehicle("A").positions)
+    # print(game.get_vehicle("A").positions)
 
 
 # Press the green button in the gutter to run the script.
