@@ -1,7 +1,6 @@
-import string
 from enum import Enum
+
 import copy
-from typing import no_type_check
 
 class Move(Enum):
     UP = "up"
@@ -17,11 +16,13 @@ class Rotation(Enum):
 
 # RushHour class
 class RushHour:
-    def __init__(self, board, vehicles):
+    def __init__(self, board, vehicles, config_line):
         # A 2D list of the board
         self.board: list[list] = board
         # An array of vehicles
         self.vehicles: list[Vehicle] = vehicles
+        # The input config line
+        self.config_line = config_line
 
     # Takes in the vehicle name
     # Returns the vehicle object
@@ -90,7 +91,7 @@ class RushHour:
 
     # Returns a list of dictionaries of valid states
     # Dictionary includes 'rushHour' as a valid RushHour object and the 'vehicleName' as the vehicle name moved
-    def get_all_next_valid_states(self, vehicle_info: list[str]):
+    def get_all_next_valid_states(self, history: dict):
         valid_states = []
         for vehicle in self.vehicles:
             for move in Move:
@@ -99,10 +100,20 @@ class RushHour:
                     valid_move = new_rush_hour.move_vehicle(move, i, vehicle.name)
                     new_vehicle = new_rush_hour.get_vehicle(vehicle.name)
                     if valid_move:
+                        if history:
+                            vehicle_info = [new_vehicle.name + str(new_vehicle.fuel_limit)] + history['vehicleInfo']
+                            new_history = history['history'] + [history]
+                        else:
+                            vehicle_info = [new_vehicle.name + str(new_vehicle.fuel_limit)]
+                            new_history = []
                         valid_states.append({
                             'rushHour': new_rush_hour,
                             'vehicleName': vehicle.name,
-                            'vehicleInfo': [new_vehicle.name + str(new_vehicle.fuel_limit)] + vehicle_info
+                            'vehicleInfo': vehicle_info,
+                            'vehicleMove': move.value,
+                            'vehicleDistance': i,
+                            'vehicleFuel': new_vehicle.fuel_limit,
+                            'history': new_history
                         })
         return valid_states
 
@@ -124,12 +135,20 @@ class RushHour:
                 for i in range(vehicle.size):
                     self.board[2][5-i] = "."
 
+    # Return a 1 line string of the board
+    def get_one_liner_board(self) -> str:
+        line = ''
+        for y in range(len(self.board)):
+            for x in range(len(self.board[y])):
+                line += self.board[y][x]
+        return line
+
 
 # Vehicle class
 class Vehicle:
     def __init__(self, name, positions, fuel_limit):
         # The name of the vehicle
-        self.name: string = name
+        self.name: str = name
         # The size of the car (size of the positions)
         self.size: int = len(positions)
         # An array of positions
