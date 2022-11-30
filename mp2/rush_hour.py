@@ -101,7 +101,7 @@ class RushHour:
                     if valid_move:
                         valid_states.append({
                             'rushHour': new_rush_hour,
-                            'vehicleNames': vehicle.name,
+                            'vehicleName': vehicle.name,
                             'vehicleInfo': [new_vehicle.name + str(new_vehicle.fuel_limit)] + vehicle_info
                         })
         return valid_states
