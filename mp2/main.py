@@ -18,10 +18,10 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    sample_mod(initial_game=games[1])
+    # sample_mod(initial_game=games[1])
 
-    # A Star Algorithm
-    #a_star_solver(rush_hour=games[0], heuristic_used=1)
+    # A Star Algorithm with h1
+    # a_star_solver(rush_hours=games, heuristic_used=1)
 
 
 # A sample function with some board manipulations with RushHour methods
@@ -52,7 +52,7 @@ def sample_mod(initial_game):
     #         print(el, end=" ")
     #     print()
 
-    #valid_states = game.get_all_next_valid_states()
+    valid_states = game.get_all_next_valid_states([])
 
     # for state in valid_states:
     #     for line in state.board:
@@ -69,7 +69,7 @@ def sample_mod(initial_game):
     #     print("h1", get_h1(state))
     #     print("h2", get_h2(state))
     for state in valid_states:
-        for line in state['game'].board:
+        for line in state['rushHour'].board:
             for el in line:
                 print(el, end=" ")
             print()

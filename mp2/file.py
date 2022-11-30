@@ -83,12 +83,11 @@ def create_vehicles(vehicles_dict, fuel_limits):
 # Returns a dictionary
 def get_fuel_limits(line, default_fuel_limit):
     fuel_limits = {}
-    index = 0
+    fuel_remaining_line = line[36:]
     # Loop through characters after the board
-    for char in line[36:]:
+    for index, char in enumerate(fuel_remaining_line):
         if 'A' <= char <= 'Z':
-            fuel_limits[char] = line[index + 1]
-            index += 1
+            fuel_limits[char] = int(fuel_remaining_line[index + 1])
         else:
             continue
     # Create a defaultdict that returns the default_fuel_limit if key does not exist
@@ -99,7 +98,7 @@ def get_fuel_limits(line, default_fuel_limit):
 # Write to search text
 #
 def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_hour: RushHour,
-                      moved_vehicle_name: str = ''):
+                      moved_vehicle_info: list[str]):
     if not os.path.exists('output'):
         os.makedirs('output')
     file = open(os.path.join('output', file_name), mode)
@@ -107,7 +106,7 @@ def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_ho
     for y in range(len(rush_hour.board)):
         for x in range(len(rush_hour.board[y])):
             file.write(rush_hour.board[y][x])
-    if moved_vehicle_name:
-        file.write(' %s%s' % (moved_vehicle_name, rush_hour.get_vehicle(vehicle_name=moved_vehicle_name).fuel_limit))
+    for moved_vehicle_info in moved_vehicle_info:
+        file.write(' %s' % moved_vehicle_info)
     file.write('\n')
     file.close()

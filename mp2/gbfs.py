@@ -63,7 +63,8 @@ def greedy_bfs(initial_state, h):
         print()
         print("---------------------------------------------------")
         # Get all the next valid states
-        valid_states = node[2]['rushHour'].get_all_next_valid_states()
+        # TODO: pass all the old vehicle info
+        valid_states = node[2]['rushHour'].get_all_next_valid_states([])
         for state in valid_states:
             vehicle_name = state['vehicleName']
             fuel_limit = state['rushHour'].get_vehicle(vehicle_name).fuel_limit
