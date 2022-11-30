@@ -38,7 +38,7 @@ def generate_games(lines):
         # Create vehicles objects
         vehicles = create_vehicles(vehicles_dict=vehicles_dict, fuel_limits=fuel_limits)
         # Add the created game to the list of games
-        rush_hour_game = RushHour(board=board, vehicles=vehicles)
+        rush_hour_game = RushHour(board=board, vehicles=vehicles, config_line=line)
         games.append(rush_hour_game)
     return games
 
@@ -95,8 +95,10 @@ def get_fuel_limits(line, default_fuel_limit):
     return fuel_limits
 
 
-# Write to search text
-#
+# Write to Search file
+# Takes in the file_name, the write mode (initial should be 'w' then all appends should be 'a'),
+# the f(n) value, the g(n) value, the h(n) value, the rush_hour object,
+# and a list of the moved vehicle info ['A99', 'M99']
 def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_hour: RushHour,
                       moved_vehicle_info: list[str]):
     if not os.path.exists('output'):
@@ -109,4 +111,80 @@ def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_ho
     for moved_vehicle_info in moved_vehicle_info:
         file.write(' %s' % moved_vehicle_info)
     file.write('\n')
+    file.close()
+
+
+# Write the Solution file
+# Takes in the file_name, the initial RushHour object, the final state dict (the one returned from valid states),
+# the runtime value, and the search path length states value
+def write_solution_file(file_name: str, initial_game: RushHour, final_state: dict, runtime: float,
+                        search_path_length: int):
+    if not os.path.exists('output'):
+        os.makedirs('output')
+    file = open(os.path.join('output', file_name), 'w')
+
+    # Initial config
+    file.write('--------------------------------------------------------------------------------\n')
+    file.write('Initial board configuration:  %s\n' % initial_game.config_line)
+    file.write('\n')
+
+    # Initial board
+    file.write('! %s\n' % initial_game.config_line[36:])
+    for y in range(len(initial_game.board)):
+        for x in range(len(initial_game.board[y])):
+            file.write(initial_game.board[y][x])
+        file.write('\n')
+    file.write('\n')
+
+    # Initial vehicle fuel availability
+    file.write('Car fuel available: ')
+    for vehicle in initial_game.vehicles:
+        file.write('%s:%s ' % (vehicle.name, vehicle.fuel_limit))
+    file.write('\n')
+    file.write('\n')
+
+    # Results summary
+    file.write('Runtime: %s seconds\n' % runtime)
+    file.write('Search path length: %s states\n' % search_path_length)
+    file.write('Solution path length: %s moves\n' % len(final_state['vehicleInfo']))
+
+    # Solution path summary
+    file.write('Solution path: ')
+    for history in final_state['history']:
+        file.write('%s %s %s;' % (history['vehicleName'], history['vehicleMove'], history['vehicleDistance']))
+    file.write('%s %s %s;' % (final_state['vehicleName'], final_state['vehicleMove'], final_state['vehicleDistance']))
+    file.write('\n')
+    file.write('\n')
+
+    # Solution path
+    for history in final_state['history']:
+        file.write('%3s\t%6s\t%2s\t%8s\t%s\t' %
+                   (history['vehicleName'], history['vehicleMove'], history['vehicleDistance'], history['vehicleFuel'],
+                    history['rushHour'].get_one_liner_board()))
+        for vehicle_info in history['vehicleInfo']:
+            file.write('%s ' % vehicle_info)
+        file.write('\n')
+    file.write('%3s\t%6s\t%2s\t%8s\t%s\t' % (final_state['vehicleName'], final_state['vehicleMove'],
+                                             final_state['vehicleDistance'], final_state['vehicleFuel'],
+                                             final_state['rushHour'].get_one_liner_board()))
+    for vehicle_info in final_state['vehicleInfo']:
+        file.write('%s ' % vehicle_info)
+    file.write('\n')
+    file.write('\n')
+
+    # Used car paths
+    file.write('! ')
+    for vehicle_info in final_state['vehicleInfo']:
+        file.write('%s ' % vehicle_info)
+    file.write('\n')
+
+    # Final board
+    for y in range(len(final_state['rushHour'].board)):
+        for x in range(len(final_state['rushHour'].board[y])):
+            file.write(final_state['rushHour'].board[y][x])
+        file.write('\n')
+    file.write('\n')
+
+    file.write('--------------------------------------------------------------------------------\n')
+
     file.close()
