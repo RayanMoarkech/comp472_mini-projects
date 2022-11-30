@@ -21,7 +21,7 @@ def main():
     # sample_mod(initial_game=games[1])
 
     # A Star Algorithm with h1
-    a_star_solver(rush_hours=games, heuristic_used=1)
+    # a_star_solver(rush_hours=games, heuristic_used=1)
 
 
 # A sample function with some board manipulations with RushHour methods
@@ -69,7 +69,7 @@ def sample_mod(initial_game):
     #     print("h1", get_h1(state))
     #     print("h2", get_h2(state))
     for state in valid_states:
-        for line in state['game'].board:
+        for line in state['rushHour'].board:
             for el in line:
                 print(el, end=" ")
             print()
