@@ -52,7 +52,7 @@ def sample_mod(initial_game):
     #         print(el, end=" ")
     #     print()
 
-    valid_states = game.get_all_next_valid_states([])
+    valid_states = game.get_all_next_valid_states({})
 
     # for state in valid_states:
     #     for line in state.board:
