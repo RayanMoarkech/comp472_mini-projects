@@ -2,6 +2,7 @@ from file import get_games
 from rush_hour import Move
 from heuristics import get_h1, get_h2
 from gbfs import greedy_bfs
+from a_star_solver import main as a_star_solver
 import copy
 
 
@@ -17,7 +18,10 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    sample_mod(initial_game=games[0])
+    # sample_mod(initial_game=games[0])
+
+    # A Star Algorithm
+    a_star_solver(rush_hour=games[0], heuristic_used=1)
 
 
 # A sample function with some board manipulations with RushHour methods
@@ -60,6 +64,12 @@ def sample_mod(initial_game):
     # for state in valid_states:
     #     print("h1", get_h1(state))
     #     print("h2", get_h2(state))
+    for state in valid_states:
+        for line in state['game'].board:
+            for el in line:
+                print(el, end=" ")
+            print()
+        print()
 
     greedy_bfs(game, get_h1)
 
