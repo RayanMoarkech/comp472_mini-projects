@@ -97,7 +97,6 @@ class RushHour:
 
     # Returns a list of dictionaries of valid states
     # Dictionary includes 'rushHour' as a valid RushHour object and the 'vehicleName' as the vehicle name moved
-    @no_type_check
     def get_all_next_valid_states(self):
         valid_states = []
         for vehicle in self.vehicles:
