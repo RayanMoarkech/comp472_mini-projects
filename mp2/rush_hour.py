@@ -1,6 +1,7 @@
 import string
 from enum import Enum
 import copy
+from typing import no_type_check
 
 class Move(Enum):
     UP = "up"
@@ -84,6 +85,7 @@ class RushHour:
         for position in vehicle.positions:
             self.board[position.y][position.x] = vehicle_name
         
+        self.valet()
         return True
 
     # Returns a list of dictionaries of valid states
@@ -109,8 +111,18 @@ class RushHour:
         vehicle = self.get_vehicle("A")
         return vehicle.get_rotation() == Rotation.HORIZONTAL and vehicle.positions[0].y == 2
 
+    # Check if the board is solved
     def solved(self):
         return self.board[2][5] == "A"
+
+    # Check if the board is at the exit and ready to be moved out with valet
+    def valet(self):
+        if self.board[2][5] != "." and self.board[2][5] != "A":
+            vehicle = self.get_vehicle(self.board[2][5])
+            if vehicle.get_rotation() == Rotation.HORIZONTAL:
+                print("Valet service")
+                for i in range(vehicle.size):
+                    self.board[2][5-i] = "."
 
 
 # Vehicle class
