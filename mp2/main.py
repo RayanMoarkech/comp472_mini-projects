@@ -20,8 +20,8 @@ def main():
     # Board manipulation
     # sample_mod(initial_game=games[0])
 
-    # A Star Algorithm
-    a_star_solver(rush_hour=games[0], heuristic_used=1)
+    # A Star Algorithm with h1
+    a_star_solver(rush_hours=games, heuristic_used=1)
 
 
 # A sample function with some board manipulations with RushHour methods
@@ -54,7 +54,7 @@ def sample_mod(initial_game):
 
     # print()
 
-    valid_states = game.get_all_next_valid_states()
+    valid_states = game.get_all_next_valid_states([])
 
     for state in valid_states:
         for line in state['game'].board:
