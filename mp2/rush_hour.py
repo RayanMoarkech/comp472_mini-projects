@@ -93,6 +93,7 @@ class RushHour:
         for position in vehicle.positions:
             self.board[position.y][position.x] = vehicle_name
         
+        self.valet()
         return True
 
     # Returns a list of dictionaries of valid states
@@ -118,6 +119,14 @@ class RushHour:
     
     def solved(self):
         return self.board[2][5] == "A"
+
+    def valet(self):
+        if self.board[2][5] != "." and self.board[2][5] != "A":
+            vehicle = self.get_vehicle(self.board[2][5])
+            if vehicle.get_rotation() == Rotation.HORIZONTAL:
+                print("Valet service")
+                for i in range (vehicle.size):
+                    self.board[2][5-i] = "."
 
 
 # Vehicle class

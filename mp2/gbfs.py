@@ -43,7 +43,6 @@ def greedy_bfs(initial_state, h):
     pritority_queue = PriorityQueue()
     # Add the initial state to the queue
     pritority_queue.push(item=initial_state, node_list=[], priority=h(initial_state['rushHour']))
-    pritority_queue.push(item=initial_state, node_list=[], priority=h(initial_state['rushHour']))
     node = pritority_queue._queue[0]
     # node[0] = 0
     # node[1] = index
