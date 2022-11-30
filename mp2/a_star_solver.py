@@ -94,21 +94,6 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             # Sort the list
             open_valid_states.sort(key=take_f)
 
-            # previous_valid_rush_hour_states = copy.deepcopy(valid_rush_hour_states)
-            #
-            # # Reorder valid_rush_hour_states
-            # min_f, index_min_f = get_min_f(successors)
-            # possible_index = 0
-            # for previous_valid_rush_hour_state in previous_valid_rush_hour_states:
-            #     f = get_values(valid_rush_hour_state=previous_valid_rush_hour_state)[-1]
-            #     while min_f < f:
-            #         successor = successors.pop(index_min_f)
-            #         valid_rush_hour_states.insert(possible_index, successor)
-            #         # Get the new min
-            #         min_f, index_min_f = get_min_f(successors)
-            #         possible_index += 1
-            #     possible_index += 1
-
             # Pop the tested path
             popped = open_valid_states.pop(0)
             visited_boards.append(popped)
