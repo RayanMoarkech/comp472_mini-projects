@@ -159,7 +159,7 @@ def write_solution_file(file_name: str, initial_game: RushHour, final_state: dic
         # Solution path summary
         file.write('Solution path: ')
         for history in final_state['history']:
-            file.write('%s %s %s;' % (history['vehicleName'], history['vehicleMove'], history['vehicleDistance']))
+            file.write('%s %s %s; ' % (history['vehicleName'], history['vehicleMove'], history['vehicleDistance']))
         file.write('%s %s %s; ' % (final_state['vehicleName'], final_state['vehicleMove'], final_state['vehicleDistance']))
         file.write('\n')
         file.write('\n')
