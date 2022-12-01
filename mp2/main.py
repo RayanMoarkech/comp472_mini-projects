@@ -19,7 +19,12 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    sample_mod(initial_game=games[2])
+    sample_mod(initial_game=games[0])
+
+    # A Star Algorithm with h1
+    #a_star_solver(rush_hours=games, heuristic_used=1)
+    #gbfs(rush_hours=games, heuristic_used=1)
+    #sample_mod(initial_game=games[0])
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)
@@ -76,8 +81,6 @@ def sample_mod(initial_game):
     #             print(el, end=" ")
     #         print()
     #     print()
-
-    #greedy_bfs(game, get_h1)
 
     # Get vehicle position
     # print(game.get_vehicle("A").positions)
