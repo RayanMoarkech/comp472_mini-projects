@@ -23,6 +23,12 @@ def main():
     # A Star Algorithm with h1
     # a_star_solver(rush_hours=games, heuristic_used=1)
 
+    # A Star Algorithm with h2
+    # a_star_solver(rush_hours=games, heuristic_used=2)
+
+    # A Star Algorithm with h3
+    # a_star_solver(rush_hours=games, heuristic_used=3)
+
 
 # A sample function with some board manipulations with RushHour methods
 def sample_mod(initial_game):
