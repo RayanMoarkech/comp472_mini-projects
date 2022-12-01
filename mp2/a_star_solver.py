@@ -1,5 +1,5 @@
 from rush_hour import RushHour
-from heuristics import get_h1
+from heuristics import get_h1, get_h2, get_h3, get_h4
 from file import write_search_file, write_solution_file
 
 import functools
@@ -13,10 +13,22 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         start_time = time.time()
         search_path_length = 0
 
-        # Get heuristic
+        # Set lambda functions
         if heuristic_used == 1:
-            heuristic = get_h1(rush_hour=rush_hour)
+            get_h = get_h1
             take_f = take_f_h1
+        elif heuristic_used == 2:
+            get_h = get_h2
+            take_f = take_f_h2
+        elif heuristic_used == 3:
+            get_h = get_h3
+            take_f = take_f_h3
+        elif heuristic_used == 4:
+            get_h = get_h4
+            take_f = take_f_h4
+
+        # Get heuristic
+        heuristic = get_h(rush_hour=rush_hour)
 
         # Search file names
         search_file_name = 'a-h' + str(heuristic_used) + '-search' + '-' + str(index+1) + '.txt'
@@ -41,8 +53,7 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             # Start with the first valid state - min f
 
             # Get heuristic
-            if heuristic_used == 1:
-                heuristic = get_h1(rush_hour=open_valid_states[0]['rushHour'])
+            heuristic = get_h(rush_hour=open_valid_states[0]['rushHour'])
             g = len(open_valid_states[0]['vehicleInfo'])
             f = heuristic + g
 
@@ -100,9 +111,15 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             popped = open_valid_states.pop(0)
             visited_boards.append(popped)
 
-        # Write solution summary to file
+        # Get the runtime
         runtime = time.time() - start_time
-        write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=open_valid_states[0],
+        # Check if there is a solution
+        if open_valid_states:
+            final_state = open_valid_states[0]
+        else:
+            final_state = {}
+        # Write solution summary to file
+        write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
                             runtime=runtime, search_path_length=search_path_length)
 
 
