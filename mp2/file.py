@@ -57,10 +57,11 @@ def create_board(line):
             # add the char in the board
             board[y].append(char)
             # add the char position to the vehicle dictionary
-            if char in vehicles_dict:
-                vehicles_dict[char].append(Position(x, y))
-            else:
-                vehicles_dict[char] = [Position(x, y)]
+            if not char == '.':
+                if char in vehicles_dict:
+                    vehicles_dict[char].append(Position(x, y))
+                else:
+                    vehicles_dict[char] = [Position(x, y)]
             index += 1
         elif index >= 36:
             break
