@@ -145,29 +145,42 @@ def get_min_f(valid_rush_hour_states: list[any], heuristic_used: int):
     return min_f, index
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h1(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=1)[-1]
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h2(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=2)[-1]
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h3(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=3)[-1]
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h4(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=4)[-1]
 
 
-def get_values(valid_rush_hour_state, heuristic_used: int):
+# Get the h, g, and f values
+# Takes in the valid rush hour state dictionary
+# and the heuristic used
+def get_values(valid_rush_hour_state: dict, heuristic_used: int):
     if heuristic_used == 1:
         h = get_h1(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 2:
+        h = get_h2(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 3:
+        h = get_h3(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 4:
+        h = get_h4(rush_hour=valid_rush_hour_state['rushHour'])
     g = len(valid_rush_hour_state['vehicleInfo'])
     f = h + g
     return h, g, f
