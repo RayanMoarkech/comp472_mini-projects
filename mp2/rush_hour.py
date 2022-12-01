@@ -39,6 +39,11 @@ class RushHour:
     # Takes in the move: Move enum, distance: int, vehicle_name: string
     def move_vehicle(self, move, distance, vehicle_name):
         vehicle = self.get_vehicle(vehicle_name=vehicle_name)
+
+        # Check if vehicle has fuel left to move through the given distance
+        if vehicle.fuel_limit - distance < 0:
+            return False
+
         rotation = vehicle.get_rotation()
         is_free = False
 
