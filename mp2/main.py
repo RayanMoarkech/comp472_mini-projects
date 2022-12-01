@@ -17,7 +17,6 @@ input_file = "metadata/input/sample-input.txt"
 def main():
     # Get a list of RushHour objects from an input file
     games = get_games(filename=input_file)
-    games.pop(2)
 
     # Board manipulation
     #sample_mod(initial_game=games[3])
