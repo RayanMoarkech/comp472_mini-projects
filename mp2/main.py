@@ -22,8 +22,8 @@ def main():
     #sample_mod(initial_game=games[0])
 
     # A Star Algorithm with h1
-    a_star_solver(rush_hours=games, heuristic_used=1)
-    #gbfs(rush_hours=games, heuristic_used=1)
+    #a_star_solver(rush_hours=games, heuristic_used=1)
+    gbfs(rush_hours=games, heuristic_used=1)
 
 
 # A sample function with some board manipulations with RushHour methods
