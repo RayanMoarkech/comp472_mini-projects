@@ -57,10 +57,11 @@ def create_board(line):
             # add the char in the board
             board[y].append(char)
             # add the char position to the vehicle dictionary
-            if char in vehicles_dict:
-                vehicles_dict[char].append(Position(x, y))
-            else:
-                vehicles_dict[char] = [Position(x, y)]
+            if not char == '.':
+                if char in vehicles_dict:
+                    vehicles_dict[char].append(Position(x, y))
+                else:
+                    vehicles_dict[char] = [Position(x, y)]
             index += 1
         elif index >= 36:
             break
@@ -143,47 +144,54 @@ def write_solution_file(file_name: str, initial_game: RushHour, final_state: dic
     file.write('\n')
     file.write('\n')
 
+    # Error if no solution
+    if not final_state:
+        file.write('Sorry, could not solve the puzzle as specified.\n')
+        file.write('Error: no solution found\n')
+        file.write('\n')
+
     # Results summary
     file.write('Runtime: %s seconds\n' % runtime)
-    file.write('Search path length: %s states\n' % search_path_length)
-    file.write('Solution path length: %s moves\n' % len(final_state['vehicleInfo']))
+    if final_state:
+        file.write('Search path length: %s states\n' % search_path_length)
+        file.write('Solution path length: %s moves\n' % len(final_state['vehicleInfo']))
 
-    # Solution path summary
-    file.write('Solution path: ')
-    for history in final_state['history']:
-        file.write('%s %s %s;' % (history['vehicleName'], history['vehicleMove'], history['vehicleDistance']))
-    file.write('%s %s %s; ' % (final_state['vehicleName'], final_state['vehicleMove'], final_state['vehicleDistance']))
-    file.write('\n')
-    file.write('\n')
+        # Solution path summary
+        file.write('Solution path: ')
+        for history in final_state['history']:
+            file.write('%s %s %s; ' % (history['vehicleName'], history['vehicleMove'], history['vehicleDistance']))
+        file.write('%s %s %s; ' % (final_state['vehicleName'], final_state['vehicleMove'], final_state['vehicleDistance']))
+        file.write('\n')
+        file.write('\n')
 
-    # Solution path
-    for history in final_state['history']:
-        file.write('%3s\t%6s\t%2s\t%8s\t%s\t' %
-                   (history['vehicleName'], history['vehicleMove'], history['vehicleDistance'], history['vehicleFuel'],
-                    history['rushHour'].get_one_liner_board()))
-        for vehicle_info in history['vehicleInfo']:
+        # Solution path
+        for history in final_state['history']:
+            file.write('%3s\t%6s\t%2s\t%8s\t%s\t' %
+                       (history['vehicleName'], history['vehicleMove'], history['vehicleDistance'], history['vehicleFuel'],
+                        history['rushHour'].get_one_liner_board()))
+            for vehicle_info in history['vehicleInfo']:
+                file.write('%s ' % vehicle_info)
+            file.write('\n')
+        file.write('%3s\t%6s\t%2s\t%8s\t%s\t' % (final_state['vehicleName'], final_state['vehicleMove'],
+                                                 final_state['vehicleDistance'], final_state['vehicleFuel'],
+                                                 final_state['rushHour'].get_one_liner_board()))
+        for vehicle_info in final_state['vehicleInfo']:
             file.write('%s ' % vehicle_info)
         file.write('\n')
-    file.write('%3s\t%6s\t%2s\t%8s\t%s\t' % (final_state['vehicleName'], final_state['vehicleMove'],
-                                             final_state['vehicleDistance'], final_state['vehicleFuel'],
-                                             final_state['rushHour'].get_one_liner_board()))
-    for vehicle_info in final_state['vehicleInfo']:
-        file.write('%s ' % vehicle_info)
-    file.write('\n')
-    file.write('\n')
-
-    # Used car paths
-    file.write('! ')
-    for vehicle_info in final_state['vehicleInfo']:
-        file.write('%s ' % vehicle_info)
-    file.write('\n')
-
-    # Final board
-    for y in range(len(final_state['rushHour'].board)):
-        for x in range(len(final_state['rushHour'].board[y])):
-            file.write(final_state['rushHour'].board[y][x])
         file.write('\n')
-    file.write('\n')
+
+        # Used car paths
+        file.write('! ')
+        for vehicle_info in final_state['vehicleInfo']:
+            file.write('%s ' % vehicle_info)
+        file.write('\n')
+
+        # Final board
+        for y in range(len(final_state['rushHour'].board)):
+            for x in range(len(final_state['rushHour'].board[y])):
+                file.write(final_state['rushHour'].board[y][x])
+            file.write('\n')
+        file.write('\n')
 
     file.write('--------------------------------------------------------------------------------\n')
 

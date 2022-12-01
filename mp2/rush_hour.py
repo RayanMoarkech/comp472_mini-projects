@@ -39,6 +39,11 @@ class RushHour:
     # Takes in the move: Move enum, distance: int, vehicle_name: string
     def move_vehicle(self, move, distance, vehicle_name):
         vehicle = self.get_vehicle(vehicle_name=vehicle_name)
+
+        # Check if vehicle has fuel left to move through the given distance
+        if vehicle.fuel_limit - distance < 0:
+            return False
+
         rotation = vehicle.get_rotation()
         is_free = False
 
@@ -124,7 +129,14 @@ class RushHour:
 
     # Check if the board is solved
     def solved(self):
-        return self.board[2][5] == "A"
+        # Check if the ambulance is at the exit
+        solved = self.board[2][5] == "A"
+        if not solved:
+            ambulance = self.get_vehicle("A")
+            # Check if ambulance is still in the board
+            if not ambulance or not ambulance.positions:
+                solved = True
+        return solved
 
     # Check if the board is at the exit and ready to be moved out with valet
     def valet(self):
