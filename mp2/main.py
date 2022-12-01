@@ -17,14 +17,16 @@ input_file = "metadata/input/sample-input.txt"
 def main():
     # Get a list of RushHour objects from an input file
     games = get_games(filename=input_file)
+    games.pop(2)
 
     # Board manipulation
-    sample_mod(initial_game=games[1])
+    #sample_mod(initial_game=games[3])
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)
     #gbfs(rush_hours=games, heuristic_used=1)
     #sample_mod(initial_game=games[0])
+    greedy_bfs(rush_hours=games, heuristic_used=1)
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)
@@ -72,7 +74,7 @@ def sample_mod(initial_game):
     #     print("h1", get_h1(state['game']))
     #     print("h2", get_h2(state))
 
-    greedy_bfs({'rushHour': game, 'vehicleName': ''}, get_h1)
+    #greedy_bfs({'rushHour': game, 'vehicleName': ''}, 1)
     #     print("h1", get_h1(state))
     #     print("h2", get_h2(state))
     # for state in valid_states:
