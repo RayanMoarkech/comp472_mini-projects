@@ -124,7 +124,14 @@ class RushHour:
 
     # Check if the board is solved
     def solved(self):
-        return self.board[2][5] == "A"
+        # Check if the ambulance is at the exit
+        solved = self.board[2][5] == "A"
+        if not solved:
+            ambulance = self.get_vehicle("A")
+            # Check if ambulance is still in the board
+            if not ambulance or not ambulance.positions:
+                solved = True
+        return solved
 
     # Check if the board is at the exit and ready to be moved out with valet
     def valet(self):
