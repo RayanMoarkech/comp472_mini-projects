@@ -19,7 +19,7 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    sample_mod(initial_game=games[0])
+    sample_mod(initial_game=games[1])
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)

@@ -12,9 +12,14 @@ def greedy_bfs(initial_state, h):
     # node[1] = index
     # node[2] = {'rideHour': RushHour, 'vehicleName': str}
     # node[3] = []
-    while not node[2]['rushHour'].solved():
+    # while not node[2]['rushHour'].solved():
+    while pritority_queue._queue:
         node = pritority_queue._queue[0]
         pritority_queue.pop()
+
+        if node[2]['rushHour'].solved():
+            break
+
         print(node[0], end=" ")
         for line in node[2]['rushHour'].board:
             for el in line:
@@ -42,7 +47,11 @@ def greedy_bfs(initial_state, h):
         #             print(el, end="")
         #     for node_visited in state[3]:
         #         print(" ", node_visited, end="")
-        #     print()        
+        #     print()
+    if node[2]['rushHour'].solved():
+        print("SOLVED")
+    else:
+        print("NOT SOLVED")   
 
 def visited(closed_list, rush_hour_2):
     for rush_hour in closed_list:
