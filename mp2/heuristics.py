@@ -27,3 +27,11 @@ def get_h2(rush_hour: RushHour) -> int:
         if not rush_hour.board[front.y][x] == '.':
             heuristic += 1
     return heuristic
+
+
+def get_h3(rush_hour: RushHour) -> int:
+    return 0
+
+
+def get_h4(rush_hour: RushHour) -> int:
+    return 0
