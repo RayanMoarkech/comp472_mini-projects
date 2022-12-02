@@ -69,11 +69,12 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
 
             # Get all the successors
             successors = open_valid_states[0]['rushHour'].get_all_next_valid_states(history=open_valid_states[0])
-            search_path_length += len(successors)
+
+            indexes_to_pop = []  # To track the indexes that should be popped from the open list
 
             # if a node with the same position as successor is in the OPEN list
             # which has a lower f than successor, skip this successor
-            for valid_rush_hour_state in open_valid_states:
+            for open_index, valid_rush_hour_state in enumerate(open_valid_states):
                 for successor_index, successor in enumerate(successors):
                     # Check if both boards are the same
                     is_same = compare_boards(board1=valid_rush_hour_state['rushHour'].board,
@@ -86,6 +87,13 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
                         # compare and pop if successor f is higher
                         if successor_f >= valid_rush_hour_state_f:
                             successors.pop(successor_index)
+                        else:
+                            indexes_to_pop.append(open_index)
+
+            # Loop through the indexes
+            # Pop all in open list that has a higher value f compared to the successors
+            for index_to_pop in indexes_to_pop:
+                open_valid_states.pop(index_to_pop)
 
             # if a node with the same position as successor is in the CLOSED list
             # which has a lower f than successor, skip this successor
@@ -101,6 +109,9 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
                         # compare and pop if successor f is higher
                         if successor_f >= visited_board_f:
                             successors.pop(successor_index)
+
+            # Add the len of the added successors to the search path
+            search_path_length += len(successors)
 
             # Concat all the new valid states to the back of the open list
             open_valid_states += successors
@@ -134,29 +145,42 @@ def get_min_f(valid_rush_hour_states: list[any], heuristic_used: int):
     return min_f, index
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h1(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=1)[-1]
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h2(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=2)[-1]
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h3(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=3)[-1]
 
 
+# A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h4(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=4)[-1]
 
 
-def get_values(valid_rush_hour_state, heuristic_used: int):
+# Get the h, g, and f values
+# Takes in the valid rush hour state dictionary
+# and the heuristic used
+def get_values(valid_rush_hour_state: dict, heuristic_used: int):
     if heuristic_used == 1:
         h = get_h1(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 2:
+        h = get_h2(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 3:
+        h = get_h3(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 4:
+        h = get_h4(rush_hour=valid_rush_hour_state['rushHour'])
     g = len(valid_rush_hour_state['vehicleInfo'])
     f = h + g
     return h, g, f

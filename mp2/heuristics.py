@@ -29,9 +29,18 @@ def get_h2(rush_hour: RushHour) -> int:
     return heuristic
 
 
+# Gets the heuristic h2 of a rush hour game
+# Takes in RushHour object
+# Returns the heuristic value
 def get_h3(rush_hour: RushHour) -> int:
-    return 0
+    multiplier = 5
+    h = get_h1(rush_hour=rush_hour)
+    h *= multiplier
+    return h
 
 
+# Gets the heuristic h4 of a rush hour game
+# Takes in RushHour object
+# Returns the heuristic value
 def get_h4(rush_hour: RushHour) -> int:
     return 0
