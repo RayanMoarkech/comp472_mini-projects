@@ -3,9 +3,8 @@ from rush_hour import Move
 from heuristics import get_h1, get_h2
 from gbfs import greedy_bfs
 from a_star_solver import main as a_star_solver
-from gbfs_2 import main as gbfs
+from gbfs import greedy_bfs as gbfs
 
-from gbfs import greedy_bfs
 import copy
 
 
