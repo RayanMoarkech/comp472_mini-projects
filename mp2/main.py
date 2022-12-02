@@ -1,6 +1,6 @@
 from file import get_games
 from rush_hour import Move
-from heuristics import get_h1, get_h2
+from heuristics import get_h1, get_h2, get_h4, get_h5, get_h6
 from gbfs import greedy_bfs
 from a_star_solver import main as a_star_solver
 from gbfs import greedy_bfs as gbfs
@@ -18,22 +18,31 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    sample_mod(initial_game=games[1])
+    #sample_mod(initial_game=games[1])
+
+    print(get_h5(rush_hour=games[0]), get_h6(rush_hour=games[0]))
+    print(get_h5(rush_hour=games[1]), get_h6(rush_hour=games[1]))
+    print(get_h5(rush_hour=games[2]), get_h6(rush_hour=games[2]))
+    print(get_h5(rush_hour=games[3]), get_h6(rush_hour=games[3]))
+    print(get_h5(rush_hour=games[4]), get_h6(rush_hour=games[4]))
+    print(get_h5(rush_hour=games[5]), get_h6(rush_hour=games[5]))
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)
-    #gbfs(rush_hours=games, heuristic_used=1)
+    # gbfs(rush_hours=games, heuristic_used=1)
     #sample_mod(initial_game=games[0])
-
-    # A Star Algorithm with h1
-    #a_star_solver(rush_hours=games, heuristic_used=1)
-    gbfs(rush_hours=games, heuristic_used=1)
 
     # A Star Algorithm with h2
     # a_star_solver(rush_hours=games, heuristic_used=2)
+    # gbfs(rush_hours=games, heuristic_used=2)
 
     # A Star Algorithm with h3
     # a_star_solver(rush_hours=games, heuristic_used=3)
+    #gbfs(rush_hours=games, heuristic_used=3)
+
+    # A Star Algorithm with h4
+    # a_star_solver(rush_hours=games, heuristic_used=4)
+    #gbfs(rush_hours=games, heuristic_used=4)
 
 
 # A sample function with some board manipulations with RushHour methods
