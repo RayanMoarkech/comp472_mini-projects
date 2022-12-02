@@ -3,6 +3,7 @@ from rush_hour import Move
 from heuristics import get_h1, get_h2
 from gbfs import greedy_bfs
 from a_star_solver import main as a_star_solver
+from gbfs_2 import main as gbfs
 
 from gbfs import greedy_bfs
 import copy
@@ -18,16 +19,21 @@ def main():
     games = get_games(filename=input_file)
 
     # Board manipulation
-    #sample_mod(initial_game=games[3])
+    sample_mod(initial_game=games[2])
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)
     #gbfs(rush_hours=games, heuristic_used=1)
+
+    # A Star Algorithm with h2
+    # a_star_solver(rush_hours=games, heuristic_used=2)
+
+    # A Star Algorithm with h3
+    # a_star_solver(rush_hours=games, heuristic_used=3)
     #sample_mod(initial_game=games[0])
-    greedy_bfs(rush_hours=games, heuristic_used=3)
 
     # A Star Algorithm with h1
-    #a_star_solver(rush_hours=games, heuristic_used=1)
+    a_star_solver(rush_hours=games, heuristic_used=1)
     #gbfs(rush_hours=games, heuristic_used=1)
 
 
@@ -72,7 +78,7 @@ def sample_mod(initial_game):
     #     print("h1", get_h1(state['game']))
     #     print("h2", get_h2(state))
 
-    #greedy_bfs({'rushHour': game, 'vehicleName': ''}, 1)
+    #greedy_bfs({'rushHour': game, 'vehicleName': ''}, get_h1)
     #     print("h1", get_h1(state))
     #     print("h2", get_h2(state))
     # for state in valid_states:
@@ -81,6 +87,8 @@ def sample_mod(initial_game):
     #             print(el, end=" ")
     #         print()
     #     print()
+
+    #greedy_bfs(game, get_h1)
 
     # Get vehicle position
     # print(game.get_vehicle("A").positions)
