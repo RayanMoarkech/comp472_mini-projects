@@ -20,12 +20,12 @@ def main():
     # Board manipulation
     #sample_mod(initial_game=games[1])
 
-    print(get_h5(rush_hour=games[0]), get_h6(rush_hour=games[0]))
-    print(get_h5(rush_hour=games[1]), get_h6(rush_hour=games[1]))
-    print(get_h5(rush_hour=games[2]), get_h6(rush_hour=games[2]))
-    print(get_h5(rush_hour=games[3]), get_h6(rush_hour=games[3]))
-    print(get_h5(rush_hour=games[4]), get_h6(rush_hour=games[4]))
-    print(get_h5(rush_hour=games[5]), get_h6(rush_hour=games[5]))
+    # print(get_h5(rush_hour=games[0]), get_h6(rush_hour=games[0]))
+    # print(get_h5(rush_hour=games[1]), get_h6(rush_hour=games[1]))
+    # print(get_h5(rush_hour=games[2]), get_h6(rush_hour=games[2]))
+    # print(get_h5(rush_hour=games[3]), get_h6(rush_hour=games[3]))
+    # print(get_h5(rush_hour=games[4]), get_h6(rush_hour=games[4]))
+    # print(get_h5(rush_hour=games[5]), get_h6(rush_hour=games[5]))
 
     # A Star Algorithm with h1
     #a_star_solver(rush_hours=games, heuristic_used=1)

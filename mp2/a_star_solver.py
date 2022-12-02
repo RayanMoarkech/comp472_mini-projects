@@ -1,5 +1,5 @@
 from rush_hour import RushHour
-from heuristics import get_h1, get_h2, get_h3, get_h4
+from heuristics import get_h1, get_h2, get_h3, get_h4, get_h5, get_h6
 from file import write_search_file, write_solution_file
 
 import functools
@@ -26,6 +26,12 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         elif heuristic_used == 4:
             get_h = get_h4
             take_f = take_f_h4
+        elif heuristic_used == 5:
+            get_h = get_h5
+            take_f = take_f_h5
+        elif heuristic_used == 6:
+            get_h = get_h6
+            take_f = take_f_h6
 
         # Get heuristic
         heuristic = get_h(rush_hour=rush_hour)
@@ -172,6 +178,16 @@ def take_f_h3(valid_rush_hour_state):
 # take f value from the valid_rush_hour_state
 def take_f_h4(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=4)[-1]
+
+# A lambda function used for sorting key
+# take f value from the valid_rush_hour_state
+def take_f_h5(valid_rush_hour_state):
+    return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=5)[-1]
+
+# A lambda function used for sorting key
+# take f value from the valid_rush_hour_state
+def take_f_h6(valid_rush_hour_state):
+    return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=6)[-1]
 
 
 # Get the h, g, and f values
