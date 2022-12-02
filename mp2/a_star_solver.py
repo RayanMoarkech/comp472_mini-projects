@@ -70,7 +70,8 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             # Get all the successors
             successors = open_valid_states[0]['rushHour'].get_all_next_valid_states(history=open_valid_states[0])
 
-            indexes_to_pop = []  # To track the indexes that should be popped from the open list
+            open_indexes_to_pop = set()  # To track the indexes that should be popped from the open list
+            successor_indexes_to_pop = set()
 
             # if a node with the same position as successor is in the OPEN list
             # which has a lower f than successor, skip this successor
@@ -86,14 +87,9 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
                                                              heuristic_used=heuristic_used)[-1]
                         # compare and pop if successor f is higher
                         if successor_f >= valid_rush_hour_state_f:
-                            successors.pop(successor_index)
+                            successor_indexes_to_pop.add(successor_index)
                         else:
-                            indexes_to_pop.append(open_index)
-
-            # Loop through the indexes
-            # Pop all in open list that has a higher value f compared to the successors
-            for index_to_pop in indexes_to_pop:
-                open_valid_states.pop(index_to_pop)
+                            open_indexes_to_pop.add(open_index)
 
             # if a node with the same position as successor is in the CLOSED list
             # which has a lower f than successor, skip this successor
@@ -108,7 +104,19 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
                                                      heuristic_used=heuristic_used)[-1]
                         # compare and pop if successor f is higher
                         if successor_f >= visited_board_f:
-                            successors.pop(successor_index)
+                            successor_indexes_to_pop.add(successor_index)
+
+            # Loop through the indexes
+            # Pop all in successors that is not qualified
+            for i, index_to_pop in enumerate(sorted(successor_indexes_to_pop)):
+                successors.pop(index_to_pop-i)
+            # Pop all in open list that has a higher value f compared to the successors
+            for i, index_to_pop in enumerate(sorted(open_indexes_to_pop)):
+                open_valid_states.pop(index_to_pop-i)
+
+            # Pop the tested path
+            popped = open_valid_states.pop(0)
+            visited_boards.append(popped)
 
             # Add the len of the added successors to the search path
             search_path_length += len(successors)
@@ -118,10 +126,6 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             # Sort the list
             open_valid_states.sort(key=take_f)
 
-            # Pop the tested path
-            popped = open_valid_states.pop(0)
-            visited_boards.append(popped)
-
         # Get the runtime
         runtime = time.time() - start_time
         # Check if there is a solution
@@ -129,6 +133,7 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             final_state = open_valid_states[0]
         else:
             final_state = {}
+            print("UNSOLVABLE")
         # Write solution summary to file
         write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
                             runtime=runtime, search_path_length=search_path_length)
