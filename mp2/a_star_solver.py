@@ -145,17 +145,6 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
                             runtime=runtime, search_path_length=search_path_length)
 
 
-def get_min_f(valid_rush_hour_states: list[any], heuristic_used: int):
-    min_f = get_values(valid_rush_hour_state=valid_rush_hour_states[0], heuristic_used=heuristic_used)[-1]
-    index = 0
-    for i, valid_rush_hour_state in enumerate(valid_rush_hour_states):
-        current_f = get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=heuristic_used)[-1]
-        if min_f > current_f:
-            min_f = current_f
-            index = i
-    return min_f, index
-
-
 # A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h1(valid_rush_hour_state):
