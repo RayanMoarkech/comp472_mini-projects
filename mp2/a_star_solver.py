@@ -56,25 +56,29 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         # Print all possible rush hours states
         while open_valid_states and not is_solved:
 
+            # Pop the current node game
+            current_node = open_valid_states.pop(0)
+            visited_boards.append(current_node)
+
             # Start with the first valid state - min f
 
             # Get heuristic
-            heuristic = get_h(rush_hour=open_valid_states[0]['rushHour'])
-            g = len(open_valid_states[0]['vehicleInfo'])
+            heuristic = get_h(rush_hour=current_node['rushHour'])
+            g = len(current_node['vehicleInfo'])
             f = heuristic + g
 
             write_search_file(file_name=search_file_name, mode='a', f=f, g=g, h=heuristic,
-                              rush_hour=open_valid_states[0]['rushHour'],
-                              moved_vehicle_info=open_valid_states[0]['vehicleInfo'])
+                              rush_hour=current_node['rushHour'],
+                              moved_vehicle_info=current_node['vehicleInfo'])
 
             # Check if the game is solved
-            if open_valid_states[0]['rushHour'].solved():
+            if current_node['rushHour'].solved():
                 is_solved = True
                 print("SOLVED")
                 break
 
             # Get all the successors
-            successors = open_valid_states[0]['rushHour'].get_all_next_valid_states(history=open_valid_states[0])
+            successors = current_node['rushHour'].get_all_next_valid_states(history=current_node)
 
             open_indexes_to_pop = set()  # To track the indexes that should be popped from the open list
             successor_indexes_to_pop = set()
@@ -84,8 +88,8 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             for open_index, valid_rush_hour_state in enumerate(open_valid_states):
                 for successor_index, successor in enumerate(successors):
                     # Check if both boards are the same
-                    is_same = compare_boards(board1=valid_rush_hour_state['rushHour'].board,
-                                             board2=successor['rushHour'].board)
+                    is_same = compare_boards(game1=valid_rush_hour_state['rushHour'],
+                                             game2=successor['rushHour'])
                     if is_same:
                         # Get f values of both boards
                         successor_f = get_values(valid_rush_hour_state=successor, heuristic_used=heuristic_used)[-1]
@@ -102,7 +106,7 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             for visited_board in visited_boards:
                 for successor_index, successor in enumerate(successors):
                     # Check if both boards are the same
-                    is_same = compare_boards(board1=visited_board['rushHour'].board, board2=successor['rushHour'].board)
+                    is_same = compare_boards(game1=visited_board['rushHour'], game2=successor['rushHour'])
                     if is_same:
                         # Get f values of both boards
                         successor_f = get_values(valid_rush_hour_state=successor, heuristic_used=heuristic_used)[-1]
@@ -120,10 +124,6 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             for i, index_to_pop in enumerate(sorted(open_indexes_to_pop)):
                 open_valid_states.pop(index_to_pop-i)
 
-            # Pop the tested path
-            popped = open_valid_states.pop(0)
-            visited_boards.append(popped)
-
             # Add the len of the added successors to the search path
             search_path_length += len(successors)
 
@@ -136,7 +136,7 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         runtime = time.time() - start_time
         # Check if there is a solution
         if open_valid_states:
-            final_state = open_valid_states[0]
+            final_state = current_node
         else:
             final_state = {}
             print("UNSOLVABLE")
@@ -191,13 +191,14 @@ def get_values(valid_rush_hour_state: dict, heuristic_used: int):
         h = get_h3(rush_hour=valid_rush_hour_state['rushHour'])
     elif heuristic_used == 4:
         h = get_h4(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 5:
+        h = get_h5(rush_hour=valid_rush_hour_state['rushHour'])
+    elif heuristic_used == 6:
+        h = get_h6(rush_hour=valid_rush_hour_state['rushHour'])
     g = len(valid_rush_hour_state['vehicleInfo'])
     f = h + g
     return h, g, f
 
 
-def compare_boards(board1: list[list], board2: list[list]):
-    for index in range(len(board1)):
-        if not functools.reduce(lambda x, y: x and y, map(lambda p, q: p == q, board1[index], board2[index]), True):
-            return False
-    return True
+def compare_boards(game1: RushHour, game2: RushHour) -> bool:
+    return game1.board == game2.board
