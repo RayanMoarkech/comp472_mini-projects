@@ -65,17 +65,17 @@ def get_h5(rush_hour: RushHour):
                 x_front = vehicle.get_front().x + 1
                 x_behind = vehicle.get_back().x - 1
                 _y = vehicle.get_front().y
-                if  x_front < 6 and rush_hour.board[_y][x_front] != ".":
+                if  x_front >= 6 or rush_hour.board[_y][x_front] != ".":
                     heuristic +=1
-                if x_behind >= 0 and rush_hour.board[_y][x_behind] != ".":
+                if x_behind < 0 or rush_hour.board[_y][x_behind] != ".":
                     heuristic +=1
             elif vehicle.get_rotation() == Rotation.VERTICAL:
                 y_front = vehicle.get_front().y + 1
                 y_behind = vehicle.get_back().y -1
                 _x = vehicle.get_front().x
-                if  y_front < 6 and  rush_hour.board[y_front][_x] != ".":
+                if  y_front >= 6 or rush_hour.board[y_front][_x] != ".":
                     heuristic +=1
-                if y_behind >= 0 and rush_hour.board[y_behind][_x] != ".":
+                if y_behind < 0 or rush_hour.board[y_behind][_x] != ".":
                     heuristic +=1
     return heuristic
 

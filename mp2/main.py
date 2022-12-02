@@ -42,7 +42,7 @@ def main():
 
     # A Star Algorithm with h4
     # a_star_solver(rush_hours=games, heuristic_used=4)
-    #gbfs(rush_hours=games, heuristic_used=4)
+    gbfs(rush_hours=games, heuristic_used=4)
 
 
 # A sample function with some board manipulations with RushHour methods
