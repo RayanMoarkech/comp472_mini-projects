@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  KKKCDJH..CDJHAACGM....GM.BBLL.EEE... J54 H54 G74 M26
+
+!  J54 H54 G74 M26
+KKKCDJ
+H..CDJ
+HAACGM
+....GM
+.BBLL.
+EEE...
+
+Car fuel available: K:100 C:100 D:100 J:5 H:5 A:100 G:7 M:2 B:100 L:100 E:100 
+
+Sorry, could not solve the puzzle as specified.
+Error: no solution found
+
+Runtime: 50.45560812950134 seconds
+--------------------------------------------------------------------------------
