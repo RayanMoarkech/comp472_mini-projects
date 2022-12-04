@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  IIIK..DCCK..DGHKAADGH....GH...EEEBB.
+
+! 
+IIIK..
+DCCK..
+DGHKAA
+DGH...
+.GH...
+EEEBB.
+
+Car fuel available: I:100 K:100 D:100 C:100 G:100 H:100 A:100 E:100 B:100 
+
+Runtime: 0.017988920211791992 seconds
+Search path length: 4 states
+Solution path length: 1 moves
+Solution path: K down 1; 
+
+  K	  down	 1	      99	III...DCCK..DGHKAADGHK...GH...EEEBB.	K99 
+
+! K99 
+III...
+DCCK..
+DGHKAA
+DGHK..
+.GH...
+EEEBB.
+
+--------------------------------------------------------------------------------

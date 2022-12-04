@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  CLDDDICLFMEIAAFMEIKKKMEJ...BBJGGG... J5
+
+!  J5
+CLDDDI
+CLFMEI
+AAFMEI
+KKKMEJ
+...BBJ
+GGG...
+
+Car fuel available: C:100 L:100 D:100 I:100 F:100 M:100 E:100 A:100 K:100 J:5 B:100 G:100 
+
+Sorry, could not solve the puzzle as specified.
+Error: no solution found
+
+Runtime: 36.24943518638611 seconds
+--------------------------------------------------------------------------------

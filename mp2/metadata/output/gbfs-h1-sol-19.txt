@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  FFFM.DLC.M.DLCGAA.HCG...H.G...III... D92 C81
+
+!  D92 C81
+FFFM.D
+LC.M.D
+LCGAA.
+HCG...
+H.G...
+III...
+
+Car fuel available: F:100 M:100 D:9 L:100 C:8 G:100 A:100 H:100 I:100 
+
+Runtime: 0.0873720645904541 seconds
+Search path length: 39 states
+Solution path length: 1 moves
+Solution path: A right 1; 
+
+  A	 right	 1	      99	FFFM.DLC.M.DLCG.AAHCG...H.G...III...	A99 
+
+! A99 
+FFFM.D
+LC.M.D
+LCG.AA
+HCG...
+H.G...
+III...
+
+--------------------------------------------------------------------------------
