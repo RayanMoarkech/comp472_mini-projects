@@ -2,7 +2,6 @@ from rush_hour import RushHour
 from heuristics import get_h1, get_h2, get_h3, get_h4, get_h5, get_h6
 from file import write_search_file, write_solution_file, write_to_analysis_file
 
-import functools
 import time
 
 
@@ -172,10 +171,12 @@ def take_f_h3(valid_rush_hour_state):
 def take_f_h4(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=4)[-1]
 
+
 # A lambda function used for sorting key
 # take f value from the valid_rush_hour_state
 def take_f_h5(valid_rush_hour_state):
     return get_values(valid_rush_hour_state=valid_rush_hour_state, heuristic_used=5)[-1]
+
 
 # A lambda function used for sorting key
 # take f value from the valid_rush_hour_state

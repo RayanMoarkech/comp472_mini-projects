@@ -1,4 +1,4 @@
-from file import get_games
+from file import get_games, generate_random_games, get_random_line, write_to_input_file
 from heuristics import get_h1, get_h2, get_h4, get_h5, get_h6
 from a_star_solver import main as a_star_solver
 from gbfs import greedy_bfs as gbfs
@@ -13,18 +13,18 @@ def main():
     # Create Analysis Headers
     create_analysis_file()
 
-    # Get a list of RushHour objects from an input file
-    games = get_games(filename=input_file)
+    # Add new random boards to input file
+    # for i in range(50):
+    #     write_to_input_file(get_random_line())
 
-    # print(get_h5(rush_hour=games[0]), get_h6(rush_hour=games[0]))
-    # print(get_h5(rush_hour=games[1]), get_h6(rush_hour=games[1]))
-    # print(get_h5(rush_hour=games[2]), get_h6(rush_hour=games[2]))
-    # print(get_h5(rush_hour=games[3]), get_h6(rush_hour=games[3]))
-    # print(get_h5(rush_hour=games[4]), get_h6(rush_hour=games[4]))
-    # print(get_h5(rush_hour=games[5]), get_h6(rush_hour=games[5]))
+    # Get a list of RushHour objects from an input file
+    # games = get_games(filename=input_file)
+
+    # Get a list of RushHour objects from random
+    # games = generate_random_games(count=5)
 
     # UCS
-    UniformCostSearch(rush_hours=games)
+    # UniformCostSearch(rush_hours=games)
 
     # GBFS Algorithm with h1
     # gbfs(rush_hours=games, heuristic_used=1)
@@ -49,6 +49,12 @@ def main():
 
     # A Star Algorithm with h4
     # a_star_solver(rush_hours=games, heuristic_used=4)
+
+    # GBFS Algorithm with h5
+    # gbfs(rush_hours=games, heuristic_used=5)
+
+    # A Star Algorithm with h5
+    # a_star_solver(rush_hours=games, heuristic_used=5)
 
 
 # Press the green button in the gutter to run the script.

@@ -3,13 +3,108 @@ from rush_hour import RushHour, Vehicle, Position
 
 import os
 import csv
+import random
+
 
 # Get all the RushHour games from a file
 # RushHour game = boards and fuel limits
 # Returns a list of RushHour objects
-def get_games(filename):
+def get_games(filename: str) -> list[RushHour]:
     lines = get_file_lines(filename=filename)
     return generate_games(lines=lines)
+
+
+# Generates a random rush hour games
+# Returns a list RushHour objects
+def generate_random_games(count: int) -> list[RushHour]:
+    lines = []
+    for index in range(count):
+        line = get_random_line()
+        lines.append(line)
+    return generate_games(lines=lines)
+
+
+# Returns a random line of the rush hour board and fuel
+# 1 line string
+def get_random_line() -> str:
+    vehicle_list = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
+    board_line = 36 * ['.']
+
+    ambulance_front = 11 + random.randint(1, 5)
+    board_line[ambulance_front] = 'A'
+    board_line[ambulance_front + 1] = 'A'
+
+    fuel_line = ''
+
+    # Add dots everywhere
+    for index, char in enumerate(board_line):
+        # Break if all vehicle used
+        if not vehicle_list:
+            break
+        # Skip already created
+        if char != '.':
+            continue
+        # 1/11 chance to skip
+        if random.randint(1, 11) == 1:
+            continue
+        # Get a vehicle
+        vehicle_to_use = random.choice(vehicle_list)
+        vehicle_list.remove(vehicle_to_use)
+        # Get random size
+        size = random.randint(2, 3)
+        # Create horizontal vehicle: 1/2 chance
+        if random.randint(1, 2) == 1 or index > 29:
+            fits = True
+            # Check if the vehicle fits
+            multipliyer = int(index / 6)
+            if not multipliyer * 6 <= index + size < (multipliyer + 1) * 6:
+                # vehicle_list.append(vehicle_to_use)  # Insert back the vehicle
+                fits = False
+            # Check if place is taken
+            if fits:
+                for x in range(size):
+                    if board_line[index + x] != '.':
+                        fits = False
+                        break
+            # Insert vehicle
+            if fits:
+                for x in range(size):
+                    board_line[index + x] = vehicle_to_use
+                continue
+        # Create vertical vehicle: 1/2 chance or if not fitting in horizontal
+        # Check if vehicle fits
+        multipliyer = int(index / 6)
+        if not multipliyer + size < 6:
+            vehicle_list.append(vehicle_to_use)  # Insert back the vehicle
+            continue
+        # Check if place is taken
+        taken = False
+        for x in range(size):
+            if board_line[index + (x * 6)] != '.':
+                taken = True
+                break
+        if taken:
+            continue
+        # Insert vehicle
+        for x in range(size):
+            board_line[index + (x * 6)] = vehicle_to_use
+
+        # Create fuel restriction: 1/4 chance
+        if random.randint(1, 4) == 1:
+            fuel = random.randint(0, 99)
+            fuel_line += vehicle_to_use + str(fuel) + ' '
+
+    return ''.join(board_line) + ' ' + fuel_line
+
+
+# Prints the board 2D list to console
+# Takes in a 2D list board
+def print_board(board: list[list]):
+    for y in range(len(board)):
+        for x in range(len(board[y])):
+            print(board[y][x], end=' ')
+        print()
+    print()
 
 
 # Get the Lines from a file
@@ -21,7 +116,7 @@ def get_file_lines(filename):
 
 # Generate boards from the lines of a file
 # Returns a list of RushHour objects
-def generate_games(lines):
+def generate_games(lines) -> list[RushHour]:
     games = []
     for line in lines:
         line = line.strip()
@@ -96,15 +191,26 @@ def get_fuel_limits(line, default_fuel_limit):
     return fuel_limits
 
 
+# Adds a line string to the input file
+def write_to_input_file(line: str):
+    input_path = os.path.join('metadata', 'input')
+    if not os.path.exists(input_path):
+        os.makedirs(input_path)
+    file = open(os.path.join(input_path, 'input.txt'), 'a')
+    file.write('%s\n' % line)
+    file.close()
+
+
 # Write to Search file
 # Takes in the file_name, the write mode (initial should be 'w' then all appends should be 'a'),
 # the f(n) value, the g(n) value, the h(n) value, the rush_hour object,
 # and a list of the moved vehicle info ['A99', 'M99']
 def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_hour: RushHour,
                       moved_vehicle_info: list[str]):
-    if not os.path.exists('output'):
-        os.makedirs('output')
-    file = open(os.path.join('output', file_name), mode)
+    output_path = os.path.join('metadata', 'output')
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    file = open(os.path.join(output_path, file_name), mode)
     file.write('%s %s %s ' % (f, g, h))
     for y in range(len(rush_hour.board)):
         for x in range(len(rush_hour.board[y])):
@@ -120,9 +226,10 @@ def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_ho
 # the runtime value, and the search path length states value
 def write_solution_file(file_name: str, initial_game: RushHour, final_state: dict, runtime: float,
                         search_path_length: int):
-    if not os.path.exists('output'):
-        os.makedirs('output')
-    file = open(os.path.join('output', file_name), 'w')
+    output_path = os.path.join('metadata', 'output')
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    file = open(os.path.join(output_path, file_name), 'w')
 
     # Initial config
     file.write('--------------------------------------------------------------------------------\n')
