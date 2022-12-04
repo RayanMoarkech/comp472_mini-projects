@@ -144,7 +144,7 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
                             runtime=runtime, search_path_length=search_path_length)
 
-        write_to_analysis_file(puzzle_number=index, algorithm='A/A*', heuristic='h'+str(heuristic_used),
+        write_to_analysis_file(puzzle_number=index+1, algorithm='A/A*', heuristic='h'+str(heuristic_used),
                                final_state=final_state, runtime=runtime, search_path_length=search_path_length)
 
 

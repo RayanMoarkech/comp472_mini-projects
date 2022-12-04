@@ -8,6 +8,7 @@ from uniform_cost_search import main as uniform_cost_search
 # Global Variables
 input_file = "metadata/input/input.txt"
 
+
 # Main method of the code
 def main():
     # Create Analysis Headers
