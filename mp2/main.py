@@ -2,6 +2,7 @@ from file import get_games
 from heuristics import get_h1, get_h2, get_h4, get_h5, get_h6
 from a_star_solver import main as a_star_solver
 from gbfs import greedy_bfs as gbfs
+from uniform_cost_search import main as UniformCostSearch
 
 
 # Global Variables
@@ -19,6 +20,9 @@ def main():
     # print(get_h5(rush_hour=games[3]), get_h6(rush_hour=games[3]))
     # print(get_h5(rush_hour=games[4]), get_h6(rush_hour=games[4]))
     # print(get_h5(rush_hour=games[5]), get_h6(rush_hour=games[5]))
+
+    # UCS
+    UniformCostSearch(rush_hours=games)
 
     # GBFS Algorithm with h1
     # gbfs(rush_hours=games, heuristic_used=1)
