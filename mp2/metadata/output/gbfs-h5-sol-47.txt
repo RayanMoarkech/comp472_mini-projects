@@ -1,0 +1,36 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  M.LLIBMGGEIBAACEDBJKCED.JK..D.FF.... J93
+
+!  J93
+M.LLIB
+MGGEIB
+AACEDB
+JKCED.
+JK..D.
+FF....
+
+Car fuel available: M:100 L:100 I:100 B:100 G:100 E:100 A:100 C:100 D:100 J:9 K:100 F:100 
+
+Runtime: 1.0876710414886475 seconds
+Search path length: 413 states
+Solution path length: 8 moves
+Solution path: C down 1; A right 1; E down 2; A right 1; D down 1; A right 1; B down 3; A right 1; 
+
+  C	  down	 1	      99	M.LLIBMGGEIBAA.EDBJKCED.JKC.D.FF....	C99 
+  A	 right	 1	      99	M.LLIBMGGEIB.AAEDBJKCED.JKC.D.FF....	A99 C99 
+  E	  down	 2	      98	M.LLIBMGG.IB.AA.DBJKCED.JKCED.FF.E..	E98 A99 C99 
+  A	 right	 1	      98	M.LLIBMGG.IB..AADBJKCED.JKCED.FF.E..	A98 E98 A99 C99 
+  D	  down	 1	      99	M.LLIBMGG.IB..AA.BJKCED.JKCED.FF.ED.	D99 A98 E98 A99 C99 
+  A	 right	 1	      97	M.LLIBMGG.IB...AABJKCED.JKCED.FF.ED.	A97 D99 A98 E98 A99 C99 
+  B	  down	 3	      97	M.LLI.MGG.I....AA.JKCEDBJKCEDBFF.EDB	B97 A97 D99 A98 E98 A99 C99 
+  A	 right	 1	      96	M.LLI.MGG.I.....AAJKCEDBJKCEDBFF.EDB	A96 B97 A97 D99 A98 E98 A99 C99 
+
+! A96 B97 A97 D99 A98 E98 A99 C99 
+M.LLI.
+MGG.I.
+....AA
+JKCEDB
+JKCEDB
+FF.EDB
+
+--------------------------------------------------------------------------------

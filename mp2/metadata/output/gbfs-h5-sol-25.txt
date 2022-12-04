@@ -1,0 +1,29 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  .FJB.DIFJB.DIHGBAAIHGCCL.H...LEEE... D10
+
+!  D10
+.FJB.D
+IFJB.D
+IHGBAA
+IHGCCL
+.H...L
+EEE...
+
+Car fuel available: F:100 J:100 B:100 D:1 I:100 H:100 G:100 A:100 C:100 L:100 E:100 
+
+Runtime: 0.03034687042236328 seconds
+Search path length: 0 states
+Solution path length: 1 moves
+Solution path: I up 1; 
+
+  I	    up	 1	      99	IFJB.DIFJB.DIHGBAA.HGCCL.H...LEEE...	I99 
+
+! I99 
+IFJB.D
+IFJB.D
+IHGBAA
+.HGCCL
+.H...L
+EEE...
+
+--------------------------------------------------------------------------------

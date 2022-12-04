@@ -1,0 +1,36 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  B.FECMB.FECMBAAECDKJJJ.DKII...LL.... M33
+
+!  M33
+B.FECM
+B.FECM
+BAAECD
+KJJJ.D
+KII...
+LL....
+
+Car fuel available: B:100 F:100 E:100 C:100 M:3 A:100 D:100 K:100 J:100 I:100 L:100 
+
+Runtime: 65.53195023536682 seconds
+Search path length: 1257 states
+Solution path length: 8 moves
+Solution path: C down 3; L right 1; K down 1; J left 1; E down 3; A right 2; D down 1; A right 1; 
+
+  C	  down	 3	      97	B.FE.MB.FE.MBAAE.DKJJJCDKII.C.LL..C.	C97 
+  L	 right	 1	      99	B.FE.MB.FE.MBAAE.DKJJJCDKII.C..LL.C.	L99 C97 
+  K	  down	 1	      99	B.FE.MB.FE.MBAAE.D.JJJCDKII.C.KLL.C.	K99 L99 C97 
+  J	  left	 1	      99	B.FE.MB.FE.MBAAE.DJJJ.CDKII.C.KLL.C.	J99 K99 L99 C97 
+  E	  down	 3	      97	B.F..MB.F..MBAA..DJJJECDKIIEC.KLLEC.	E97 J99 K99 L99 C97 
+  A	 right	 2	      98	B.F..MB.F..MB..AADJJJECDKIIEC.KLLEC.	A98 E97 J99 K99 L99 C97 
+  D	  down	 1	      99	B.F..MB.F..MB..AA.JJJECDKIIECDKLLEC.	D99 A98 E97 J99 K99 L99 C97 
+  A	 right	 1	      97	B.F..MB.F..MB...AAJJJECDKIIECDKLLEC.	A97 D99 A98 E97 J99 K99 L99 C97 
+
+! A97 D99 A98 E97 J99 K99 L99 C97 
+B.F..M
+B.F..M
+B...AA
+JJJECD
+KIIECD
+KLLEC.
+
+--------------------------------------------------------------------------------

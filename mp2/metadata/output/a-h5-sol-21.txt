@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  BBB..KCFLL.KCFGAAK.IGM.H.I.M.HJJ.... K63 I50
+
+!  K63 I50
+BBB..K
+CFLL.K
+CFGAAK
+.IGM.H
+.I.M.H
+JJ....
+
+Car fuel available: B:100 K:6 C:100 F:100 L:100 G:100 A:100 I:5 M:100 H:100 J:100 
+
+Sorry, could not solve the puzzle as specified.
+Error: no solution found
+
+Runtime: 729.6282660961151 seconds
+--------------------------------------------------------------------------------

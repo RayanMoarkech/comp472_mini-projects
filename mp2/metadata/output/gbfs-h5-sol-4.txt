@@ -1,0 +1,36 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  .JCFBE.JCFBEAACDIL.K.DIL.K.DI.GG.... F55 B63
+
+!  F55 B63
+.JCFBE
+.JCFBE
+AACDIL
+.K.DIL
+.K.DI.
+GG....
+
+Car fuel available: J:100 C:100 F:5 B:6 E:100 A:100 D:100 I:100 L:100 K:100 G:100 
+
+Runtime: 0.4346320629119873 seconds
+Search path length: 115 states
+Solution path length: 8 moves
+Solution path: C down 3; A right 1; D down 1; A right 1; I down 1; A right 1; L down 1; A right 1; 
+
+  C	  down	 3	      97	.J.FBE.J.FBEAA.DIL.KCDIL.KCDI.GGC...	C97 
+  A	 right	 1	      99	.J.FBE.J.FBE.AADIL.KCDIL.KCDI.GGC...	A99 C97 
+  D	  down	 1	      99	.J.FBE.J.FBE.AA.IL.KCDIL.KCDI.GGCD..	D99 A99 C97 
+  A	 right	 1	      98	.J.FBE.J.FBE..AAIL.KCDIL.KCDI.GGCD..	A98 D99 A99 C97 
+  I	  down	 1	      99	.J.FBE.J.FBE..AA.L.KCDIL.KCDI.GGCDI.	I99 A98 D99 A99 C97 
+  A	 right	 1	      97	.J.FBE.J.FBE...AAL.KCDIL.KCDI.GGCDI.	A97 I99 A98 D99 A99 C97 
+  L	  down	 1	      99	.J.FBE.J.FBE...AA..KCDIL.KCDILGGCDI.	L99 A97 I99 A98 D99 A99 C97 
+  A	 right	 1	      96	.J.FBE.J.FBE....AA.KCDIL.KCDILGGCDI.	A96 L99 A97 I99 A98 D99 A99 C97 
+
+! A96 L99 A97 I99 A98 D99 A99 C97 
+.J.FBE
+.J.FBE
+....AA
+.KCDIL
+.KCDIL
+GGCDI.
+
+--------------------------------------------------------------------------------

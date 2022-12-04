@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  EEKKKF.JJCHFAALCHFGGLMHI...M.IBBDDD. L47 M48
+
+!  L47 M48
+EEKKKF
+.JJCHF
+AALCHF
+GGLMHI
+...M.I
+BBDDD.
+
+Car fuel available: E:100 K:100 F:100 J:100 C:100 H:100 A:100 L:4 G:100 M:4 I:100 B:100 D:100 
+
+Sorry, could not solve the puzzle as specified.
+Error: no solution found
+
+Runtime: 8.629949808120728 seconds
+--------------------------------------------------------------------------------
