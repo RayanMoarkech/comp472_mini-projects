@@ -1,7 +1,7 @@
 from rush_hour import RushHour
 from priority_queue import PriorityQueue
 from heuristics import get_h1, get_h2, get_h3, get_h4
-from file import write_search_file, write_solution_file
+from file import write_search_file, write_solution_file, write_to_analysis_file
 import time 
 
 def greedy_bfs(rush_hours: list[RushHour], heuristic_used: int):
@@ -91,7 +91,11 @@ def greedy_bfs(rush_hours: list[RushHour], heuristic_used: int):
             final_state = {}
         # Write solution summary to file
         write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
-                            runtime=runtime, search_path_length=search_path_length)   
+                            runtime=runtime, search_path_length=search_path_length)
+
+        write_to_analysis_file(file_name="analysis.csv", initial_game=rush_hour, puzzle_number=index, algorithm='GBFS',
+                               heuristic=heuristic_used, final_state=final_state,
+                               runtime=runtime, search_path_length=search_path_length)
 
 def visited(closed_list, rush_hour_compare):
     for rush_hour in closed_list:

@@ -1,6 +1,6 @@
 from rush_hour import RushHour
 from heuristics import get_h1, get_h2, get_h3, get_h4, get_h5, get_h6
-from file import write_search_file, write_solution_file
+from file import write_search_file, write_solution_file, write_to_analysis_file
 
 import time
 
@@ -142,6 +142,10 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         # Write solution summary to file
         write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
                             runtime=runtime, search_path_length=search_path_length)
+
+        write_to_analysis_file(file_name="analysis.csv", initial_game=rush_hour, puzzle_number=index, algorithm='A/A*',
+                               heuristic=heuristic_used, final_state=final_state,
+                               runtime=runtime, search_path_length=search_path_length)
 
 
 # A lambda function used for sorting key
