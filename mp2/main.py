@@ -11,15 +11,15 @@ input_file = "metadata/input/sample-input.txt"
 
 # Main method of the code
 def main():
+    # Add new random boards to input file
+    # for i in range(50):
+    #     write_to_input_file(get_random_line())
+
     # Get a list of RushHour objects from an input file
     # games = get_games(filename=input_file)
 
     # Get a list of RushHour objects from random
     # games = generate_random_games(count=5)
-
-    # Print out a board line
-    # for i in range(50):
-    #     write_to_input_file(get_random_line())
 
     # UCS
     # UniformCostSearch(rush_hours=games)
