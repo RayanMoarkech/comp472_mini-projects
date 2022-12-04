@@ -307,6 +307,8 @@ def write_solution_file(file_name: str, initial_game: RushHour, final_state: dic
 
 def create_analysis_file():
     analysis_path = os.path.join('metadata', 'output', 'analysis.csv')
+    if not os.path.exists(analysis_path):
+        os.makedirs(analysis_path)
     with open(analysis_path, 'w+', encoding='UTF8', newline='') as spreadsheet:
         csv_writer = csv.writer(spreadsheet)
         headers = ['Puzzle Number', 'Algorithm', 'Heuristic', 'Length of the Solution',
@@ -317,8 +319,8 @@ def create_analysis_file():
 def write_to_analysis_file(puzzle_number, algorithm: str, heuristic: str, final_state: dict, runtime: float,
                            search_path_length: int):
     analysis_path = os.path.join('metadata', 'output')
-    if not os.path.exists('output'):
-        os.makedirs('output')
+    if not os.path.exists(analysis_path):
+        os.makedirs(analysis_path)
     file = open(os.path.join(analysis_path, 'analysis.csv'), 'a')
 
     if not final_state:
