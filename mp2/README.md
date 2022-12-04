@@ -54,3 +54,6 @@ Team Name: `Codeine`
 Run the main function inside the file `main.py`.
 This will run all the assignment code in chronological manner. 
 Function calls are made in the main function to call specific tasks for each exercise number.
+
+## Folder Directory
+All inputs, outputs, and analysis are under the `metadata` folder.
