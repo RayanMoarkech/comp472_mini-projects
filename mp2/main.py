@@ -3,14 +3,16 @@ from heuristics import get_h1, get_h2, get_h4, get_h5, get_h6
 from a_star_solver import main as a_star_solver
 from gbfs import greedy_bfs as gbfs
 from uniform_cost_search import main as UniformCostSearch
-
+from file import create_analysis_file
 
 # Global Variables
 input_file = "metadata/input/sample-input.txt"
 
-
 # Main method of the code
 def main():
+    # Create Analysis Headers
+    create_analysis_file()
+
     # Get a list of RushHour objects from an input file
     games = get_games(filename=input_file)
 

@@ -1,5 +1,5 @@
 from rush_hour import RushHour
-from file import write_search_file, write_solution_file
+from file import write_search_file, write_solution_file, write_to_analysis_file
 
 import time
 
@@ -120,6 +120,8 @@ def main(rush_hours: list[RushHour]):
         write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
                             runtime=runtime, search_path_length=search_path_length)
 
+        write_to_analysis_file(file_name="analysis.csv", initial_game=rush_hour, puzzle_number=index, algorithm='UCS', heuristic='NA', final_state=final_state,
+                            runtime=runtime, search_path_length=search_path_length)
 
 # take g value from the valid_rush_hour_state
 def take_g(valid_rush_hour_state):

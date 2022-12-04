@@ -2,7 +2,7 @@ from collections import defaultdict
 from rush_hour import RushHour, Vehicle, Position
 
 import os
-
+import csv
 
 # Get all the RushHour games from a file
 # RushHour game = boards and fuel limits
@@ -196,3 +196,28 @@ def write_solution_file(file_name: str, initial_game: RushHour, final_state: dic
     file.write('--------------------------------------------------------------------------------\n')
 
     file.close()
+
+def create_analysis_file():
+    with open("output/analysis.csv", "w+", encoding="UTF8", newline="") as spreadsheet:
+        csv_writer = csv.writer(spreadsheet)
+        headers = ['Puzzle Number', 'Algorithm', 'Heuristic', 'Length of the Solution',
+                   'Length of the Search Path', 'Execution Time (in seconds)']
+        csv_writer.writerow(headers)
+
+
+def write_to_analysis_file(file_name: str, initial_game: RushHour, puzzle_number, algorithm: str, heuristic: str, final_state: dict, runtime: float,
+                        search_path_length: int):
+    if not os.path.exists('output'):
+        os.makedirs('output')
+    file = open(os.path.join('output', file_name), 'a')
+
+    # Error if no solution
+    if not final_state:
+        file.close()
+
+    else:
+        List = [puzzle_number, algorithm, heuristic, len(final_state['vehicleInfo']), search_path_length, runtime]
+        csv_writer = csv.writer(file)
+        csv_writer.writerow(List)
+        file.close()
+
