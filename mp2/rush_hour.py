@@ -143,7 +143,7 @@ class RushHour:
         if self.board[2][5] != "." and self.board[2][5] != "A":
             vehicle = self.get_vehicle(self.board[2][5])
             if vehicle.get_rotation() == Rotation.HORIZONTAL:
-                print("Valet service")
+                # print("Valet service")
                 for i in range(vehicle.size):
                     self.board[2][5-i] = "."
 
