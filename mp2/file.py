@@ -45,7 +45,7 @@ def get_random_line() -> str:
         if char != '.':
             continue
         # 1/11 chance to skip
-        if random.randint(1, 11) == 1:
+        if random.randint(1, 14) == 1:
             continue
         # Get a vehicle
         vehicle_to_use = random.choice(vehicle_list)
@@ -304,19 +304,22 @@ def write_solution_file(file_name: str, initial_game: RushHour, final_state: dic
 
     file.close()
 
+
 def create_analysis_file():
-    with open("output/analysis.csv", "w+", encoding="UTF8", newline="") as spreadsheet:
+    analysis_path = os.path.join('metadata', 'output', 'analysis.csv')
+    with open(analysis_path, 'w+', encoding='UTF8', newline='') as spreadsheet:
         csv_writer = csv.writer(spreadsheet)
         headers = ['Puzzle Number', 'Algorithm', 'Heuristic', 'Length of the Solution',
                    'Length of the Search Path', 'Execution Time (in seconds)']
         csv_writer.writerow(headers)
 
 
-def write_to_analysis_file(file_name: str, initial_game: RushHour, puzzle_number, algorithm: str, heuristic: str, final_state: dict, runtime: float,
-                        search_path_length: int):
+def write_to_analysis_file(puzzle_number, algorithm: str, heuristic: str, final_state: dict, runtime: float,
+                           search_path_length: int):
+    analysis_path = os.path.join('metadata', 'output')
     if not os.path.exists('output'):
         os.makedirs('output')
-    file = open(os.path.join('output', file_name), 'a')
+    file = open(os.path.join(analysis_path, 'analysis.csv'), 'a')
 
     # Error if no solution
     if not final_state:

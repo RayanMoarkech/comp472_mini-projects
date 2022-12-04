@@ -73,7 +73,7 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
             # Check if the game is solved
             if current_node['rushHour'].solved():
                 is_solved = True
-                print("SOLVED")
+                print("SOLVED", end=' ')
                 break
 
             # Get all the successors
@@ -136,16 +136,16 @@ def main(rush_hours: list[RushHour], heuristic_used: int):
         # Check if there is a solution
         if open_valid_states:
             final_state = current_node
+            print(runtime, " @line:", str(index+1))
         else:
             final_state = {}
-            print("UNSOLVABLE")
+            print("UNSOLVABLE @line:", str(index+1))
         # Write solution summary to file
         write_solution_file(file_name=solution_file_name, initial_game=rush_hour, final_state=final_state,
                             runtime=runtime, search_path_length=search_path_length)
 
-        write_to_analysis_file(file_name="analysis.csv", initial_game=rush_hour, puzzle_number=index, algorithm='A/A*',
-                               heuristic=heuristic_used, final_state=final_state,
-                               runtime=runtime, search_path_length=search_path_length)
+        write_to_analysis_file(puzzle_number=index, algorithm='A/A*', heuristic='h'+str(heuristic_used),
+                               final_state=final_state, runtime=runtime, search_path_length=search_path_length)
 
 
 # A lambda function used for sorting key

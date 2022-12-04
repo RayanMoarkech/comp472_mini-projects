@@ -2,8 +2,8 @@ from file import get_games, generate_random_games, get_random_line, write_to_inp
 from heuristics import get_h1, get_h2, get_h4, get_h5, get_h6
 from a_star_solver import main as a_star_solver
 from gbfs import greedy_bfs as gbfs
-from uniform_cost_search import main as UniformCostSearch
 from file import create_analysis_file
+from uniform_cost_search import main as uniform_cost_search
 
 # Global Variables
 input_file = "metadata/input/sample-input.txt"
@@ -24,7 +24,7 @@ def main():
     # games = generate_random_games(count=5)
 
     # UCS
-    # UniformCostSearch(rush_hours=games)
+    # uniform_cost_search(rush_hours=games)
 
     # GBFS Algorithm with h1
     # gbfs(rush_hours=games, heuristic_used=1)
