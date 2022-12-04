@@ -206,9 +206,10 @@ def write_to_input_file(line: str):
 # and a list of the moved vehicle info ['A99', 'M99']
 def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_hour: RushHour,
                       moved_vehicle_info: list[str]):
-    if not os.path.exists('output'):
-        os.makedirs('output')
-    file = open(os.path.join('output', file_name), mode)
+    output_path = os.path.join('metadata', 'output')
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    file = open(os.path.join(output_path, file_name), mode)
     file.write('%s %s %s ' % (f, g, h))
     for y in range(len(rush_hour.board)):
         for x in range(len(rush_hour.board[y])):
@@ -224,9 +225,10 @@ def write_search_file(file_name: str, mode: str, f: int, g: int, h: int, rush_ho
 # the runtime value, and the search path length states value
 def write_solution_file(file_name: str, initial_game: RushHour, final_state: dict, runtime: float,
                         search_path_length: int):
-    if not os.path.exists('output'):
-        os.makedirs('output')
-    file = open(os.path.join('output', file_name), 'w')
+    output_path = os.path.join('metadata', 'output')
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+    file = open(os.path.join(output_path, file_name), 'w')
 
     # Initial config
     file.write('--------------------------------------------------------------------------------\n')
