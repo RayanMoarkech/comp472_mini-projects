@@ -1,5 +1,4 @@
 from file import get_games, generate_random_games, get_random_line, write_to_input_file
-from heuristics import get_h1, get_h2, get_h4, get_h5, get_h6
 from a_star_solver import main as a_star_solver
 from gbfs import greedy_bfs as gbfs
 from file import create_analysis_file

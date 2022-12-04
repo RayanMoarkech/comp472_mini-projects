@@ -1,13 +1,14 @@
 from rush_hour import RushHour
 from priority_queue import PriorityQueue
-from heuristics import get_h1, get_h2, get_h3, get_h4
+from heuristics import get_h1, get_h2, get_h3, get_h4, get_h5
 from file import write_search_file, write_solution_file, write_to_analysis_file
 import time 
+
 
 def greedy_bfs(rush_hours: list[RushHour], heuristic_used: int):
 
     # assign heuristic function
-    heuristics = [get_h1, get_h2, get_h3, get_h4]
+    heuristics = [get_h1, get_h2, get_h3, get_h4, get_h5]
     h = heuristics[heuristic_used - 1]
 
     for index, rush_hour in enumerate(rush_hours):
