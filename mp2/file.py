@@ -321,13 +321,13 @@ def write_to_analysis_file(puzzle_number, algorithm: str, heuristic: str, final_
         os.makedirs('output')
     file = open(os.path.join(analysis_path, 'analysis.csv'), 'a')
 
-    # Error if no solution
     if not final_state:
-        file.close()
-
+        list_to_enter = [puzzle_number, algorithm, heuristic, 'NA', search_path_length, runtime]
     else:
-        List = [puzzle_number, algorithm, heuristic, len(final_state['vehicleInfo']), search_path_length, runtime]
-        csv_writer = csv.writer(file)
-        csv_writer.writerow(List)
-        file.close()
+        list_to_enter = [puzzle_number, algorithm, heuristic, len(final_state['vehicleInfo']), search_path_length,
+                         runtime]
+
+    csv_writer = csv.writer(file)
+    csv_writer.writerow(list_to_enter)
+    file.close()
 
