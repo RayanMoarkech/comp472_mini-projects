@@ -29,7 +29,7 @@ def get_h2(rush_hour: RushHour) -> int:
     return heuristic
 
 
-# Gets the heuristic h2 of a rush hour game
+# Gets the heuristic h3 of a rush hour game
 # Takes in RushHour object
 # Returns the heuristic value
 def get_h3(rush_hour: RushHour) -> int:
@@ -39,19 +39,9 @@ def get_h3(rush_hour: RushHour) -> int:
     return h
 
 
-# Gets the heuristic h4 of a rush hour game
-# Takes in RushHour object
-# Returns the heuristic value
-# Distance between ambulance and exit
-def get_h4(rush_hour: RushHour) -> int:
-    ambulance = rush_hour.get_vehicle("A")
-    front = ambulance.get_front()
-    heuristic = 5 - front.x
-    return heuristic
-
 # cars blocking ambulance also blocked by cars
 # heuristic increases if blocking car is blocked on one side and both sides
-def get_h5(rush_hour: RushHour):
+def get_h4(rush_hour: RushHour):
     ambulance = rush_hour.get_vehicle("A")
     front = ambulance.get_front()
     heuristic = 0
@@ -78,6 +68,18 @@ def get_h5(rush_hour: RushHour):
                 if y_behind < 0 or rush_hour.board[y_behind][_x] != ".":
                     heuristic +=1
     return heuristic
+
+
+# Gets the heuristic h5 of a rush hour game
+# Takes in RushHour object
+# Returns the heuristic value
+# Distance between ambulance and exit
+def get_h5(rush_hour: RushHour) -> int:
+    ambulance = rush_hour.get_vehicle("A")
+    front = ambulance.get_front()
+    heuristic = 5 - front.x
+    return heuristic
+
 
 # cars blocking ambulance also blocked by cars
 # only increases heuristic if car is blocked on both sides
