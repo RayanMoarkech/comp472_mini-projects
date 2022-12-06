@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  I.CC..I.KLDDAAKL...J.LEE.JFFMNGGHHMN D1 F6
+
+!  D1 F6
+I.CC..
+I.KLDD
+AAKL..
+.J.LEE
+.JFFMN
+GGHHMN
+
+Car fuel available: I:100 C:100 K:100 L:100 D:1 A:100 J:100 E:100 F:6 M:100 N:100 G:100 H:100 
+
+Sorry, could not solve the puzzle as specified.
+Error: no solution found
+
+Runtime: 81.9795868396759 seconds
+--------------------------------------------------------------------------------

@@ -1,0 +1,43 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  .HCCKLGH.JKLGAAJ.MG....M..IEEEFFI...
+
+! 
+.HCCKL
+GH.JKL
+GAAJ.M
+G....M
+..IEEE
+FFI...
+
+Car fuel available: H:100 C:100 K:100 L:100 G:100 J:100 A:100 M:100 I:100 E:100 F:100 
+
+Runtime: 78.74085974693298 seconds
+Search path length: 4464 states
+Solution path length: 15 moves
+Solution path: I up 1; F right 1; G down 2; A left 1; I up 2; E left 2; M down 1; K down 3; C right 1; I up 1; A right 1; G up 2; E left 1; J down 2; A right 3; 
+
+  I	    up	 1	      99	.HCCKLGH.JKLGAAJ.MG.I..M..IEEEFF....	I99 
+  F	 right	 1	      99	.HCCKLGH.JKLGAAJ.MG.I..M..IEEE.FF...	F99 I99 
+  G	  down	 2	      98	.HCCKL.H.JKL.AAJ.MG.I..MG.IEEEGFF...	G98 F99 I99 
+  A	  left	 1	      99	.HCCKL.H.JKLAA.J.MG.I..MG.IEEEGFF...	A99 G98 F99 I99 
+  I	    up	 2	      97	.HCCKL.HIJKLAAIJ.MG....MG..EEEGFF...	I97 A99 G98 F99 I99 
+  E	  left	 2	      98	.HCCKL.HIJKLAAIJ.MG....MGEEE..GFF...	E98 I97 A99 G98 F99 I99 
+  M	  down	 1	      99	.HCCKL.HIJKLAAIJ..G....MGEEE.MGFF...	M99 E98 I97 A99 G98 F99 I99 
+  K	  down	 3	      97	.HCC.L.HIJ.LAAIJ..G...KMGEEEKMGFF...	K97 M99 E98 I97 A99 G98 F99 I99 
+  C	 right	 1	      99	.H.CCL.HIJ.LAAIJ..G...KMGEEEKMGFF...	C99 K97 M99 E98 I97 A99 G98 F99 I99 
+  I	    up	 1	      96	.HICCL.HIJ.LAA.J..G...KMGEEEKMGFF...	I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+  A	 right	 1	      98	.HICCL.HIJ.L.AAJ..G...KMGEEEKMGFF...	A98 I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+  G	    up	 2	      96	.HICCLGHIJ.LGAAJ..G...KM.EEEKM.FF...	G96 A98 I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+  E	  left	 1	      97	.HICCLGHIJ.LGAAJ..G...KMEEE.KM.FF...	E97 G96 A98 I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+  J	  down	 2	      98	.HICCLGHI..LGAA...G..JKMEEEJKM.FF...	J98 E97 G96 A98 I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+  A	 right	 3	      95	.HICCLGHI..LG...AAG..JKMEEEJKM.FF...	A95 J98 E97 G96 A98 I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+
+! A95 J98 E97 G96 A98 I96 C99 K97 M99 E98 I97 A99 G98 F99 I99 
+.HICCL
+GHI..L
+G...AA
+G..JKM
+EEEJKM
+.FF...
+
+--------------------------------------------------------------------------------

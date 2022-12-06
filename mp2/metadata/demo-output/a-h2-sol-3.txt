@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------
+Initial board configuration:  BBCCM.EE.LM.JAAL..J.KFFFGGK..N.III.N E1 G5
+
+!  E1 G5
+BBCCM.
+EE.LM.
+JAAL..
+J.KFFF
+GGK..N
+.III.N
+
+Car fuel available: B:100 C:100 M:100 E:1 L:100 J:100 A:100 K:100 F:100 G:5 N:100 I:100 
+
+Sorry, could not solve the puzzle as specified.
+Error: no solution found
+
+Runtime: 14.458456039428711 seconds
+--------------------------------------------------------------------------------
